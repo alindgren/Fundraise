@@ -26,11 +26,12 @@ namespace Fundraise.Core.Tests
         }
 
         [TestMethod]
-        public void TestMethod()
+        public void CreateCampaign()
         {
-            Assert.IsTrue(true);
+            var campaign = _campaignRepository.Create("test campaign");
+            Assert.IsTrue(campaign.Name == "test campaign", "name matches");
+            Assert.IsTrue(campaign.Id != null && campaign.Id.ToString() != "00000000-0000-0000-0000-000000000000", "id is set");
+            Console.WriteLine("campaign.Id: " + campaign.Id);
         }
-
-
     }
 }

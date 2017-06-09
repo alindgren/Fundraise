@@ -14,6 +14,14 @@ namespace Fundraise.Core.Services
             _context = context;
         }
 
+        public Campaign Create(string name)
+        {
+            var campaign = new Campaign { Name = name };
+            _context.Campaigns.Add(campaign);
+            _context.SaveChanges();
+            return campaign;
+        }
+
         public IEnumerable<Campaign> FindByName(string name)
         {
             return _context.Campaigns.Where(x => x.Name == name).OrderBy(c => c.Name).ToList();
