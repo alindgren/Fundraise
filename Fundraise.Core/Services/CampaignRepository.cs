@@ -14,9 +14,11 @@ namespace Fundraise.Core.Services
             _context = context;
         }
 
-        public Campaign Create(string name)
+        public Campaign Create(string name, DateTime? endDate)
         {
             var campaign = new Campaign { Name = name };
+            if (endDate.HasValue)
+                campaign.EndDate = endDate.Value;
             _context.Campaigns.Add(campaign);
             _context.SaveChanges();
             return campaign;

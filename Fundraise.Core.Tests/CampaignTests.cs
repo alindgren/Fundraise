@@ -33,5 +33,16 @@ namespace Fundraise.Core.Tests
             Assert.IsTrue(campaign.Id != null && campaign.Id.ToString() != "00000000-0000-0000-0000-000000000000", "id is set");
             Console.WriteLine("campaign.Id: " + campaign.Id);
         }
+
+        [TestMethod]
+        public void CreateCampaignWithEndDate()
+        {
+            var campaign = _campaignRepository.Create("test campaign with end date", System.DateTime.Now.AddYears(1));
+            Assert.IsTrue(campaign.Name == "test campaign with end date", "name matches");
+            Assert.IsNotNull(campaign.EndDate);
+            Assert.IsTrue(campaign.Id != null && campaign.Id.ToString() != "00000000-0000-0000-0000-000000000000", "id is set");
+            Console.WriteLine("campaign.Id: " + campaign.Id);
+            Console.WriteLine("campaign.EndDate: " + campaign.EndDate.ToLongDateString());
+        }
     }
 }
