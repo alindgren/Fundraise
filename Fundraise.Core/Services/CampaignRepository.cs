@@ -31,7 +31,10 @@ namespace Fundraise.Core.Services
 
         public bool Exists(string name)
         {
-            var campaign = _context.Campaigns.Where(x => x.Name == name).First();
+            var campaigns = _context.Campaigns.Where(x => x.Name == name);
+            if (campaigns.Count() == 0)
+                return false;
+            var campaign = campaigns.First();
             return campaign != null;
         }
 

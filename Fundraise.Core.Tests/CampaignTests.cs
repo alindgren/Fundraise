@@ -59,8 +59,19 @@ namespace Fundraise.Core.Tests
         [TestMethod]
         public void Exists()
         {
-            Assert.IsTrue(_campaignRepository.Exists("test campaign with end date"));
-           // Assert.IsFalse(_campaignRepository.Exists("no match"));
+            _campaignRepository.Create("test campaign exists");
+            Assert.IsTrue(_campaignRepository.Exists("test campaign exists"));
+            Assert.IsFalse(_campaignRepository.Exists("no match"));
+        }
+
+        [TestMethod]
+        public void CreateAndCloseCampaign()
+        {
+            var campaign = _campaignRepository.Create("test to close campaign");
+            _campaignRepository.Close(campaign.Id);
+
+            var campaign2 = _campaignRepository.FindById(campaign.Id);
+            Assert.IsFalse(campaign2.IsActive, "'test to close campaign' IsActive should be false");
         }
     }
 }
