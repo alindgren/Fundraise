@@ -73,5 +73,19 @@ namespace Fundraise.Core.Tests
             var campaign2 = _campaignRepository.FindById(campaign.Id);
             Assert.IsFalse(campaign2.IsActive, "'test to close campaign' IsActive should be false");
         }
-    }
+
+        [TestMethod]
+        public void FindCampaignByIdReturnNull()
+        {
+            var campaign = _campaignRepository.FindById(Guid.NewGuid());
+            Assert.IsNull(campaign);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void CloseCampaignThrowExceptionDoesNotExist()
+        {
+            _campaignRepository.Close(Guid.NewGuid());
+        }
+     }
 }

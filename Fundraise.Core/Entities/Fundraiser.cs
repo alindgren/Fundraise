@@ -9,6 +9,12 @@ namespace Fundraise.Core.Entities
         public Guid Id { get; set; }
 
         [Required]
+        public Guid CampaignId { get; set; }
+
+        [Required]
+        public FundraiserType FundraiserType { get; set; }
+
+        [Required]
         [MaxLength(50)]
         public string Name { get; set; }
 

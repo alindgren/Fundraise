@@ -14,6 +14,13 @@ namespace Fundraise.Core.Services
             _context = context;
         }
 
+        public Fundraiser Create(string name, Guid campaignId, FundraiserType type)
+        {
+            var fundraiser = new Fundraiser { Name = name, CampaignId = campaignId, FundraiserType = type };
+            _context.Fundraisers.Add(fundraiser);
+            _context.SaveChanges();
+            return fundraiser;
+        }
         public IEnumerable<Fundraiser> FindByName(string name)
         {
             return _context.Fundraisers.Where(x => x.Name == name).OrderBy(c => c.Name).ToList();

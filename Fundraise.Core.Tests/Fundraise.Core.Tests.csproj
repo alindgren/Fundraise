@@ -39,9 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-  <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-</PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.EntityFrameworkCore, Version=1.1.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.EntityFrameworkCore.1.1.2\lib\net451\Microsoft.EntityFrameworkCore.dll</HintPath>
@@ -172,6 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CampaignTests.cs" />
+    <Compile Include="FundraiserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

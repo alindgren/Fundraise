@@ -6,6 +6,7 @@ namespace Fundraise.Core.Services
 {
     public interface IFundraiserRepository
     {
+        Fundraiser Create(string name, Guid campaignId, FundraiserType type);
         IEnumerable<Fundraiser> GetAll();
         Fundraiser FindById(Guid id);
         IEnumerable<Fundraiser> FindByName(string name);
