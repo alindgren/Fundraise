@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Fundraise.Core.Services;
 using Fundraise.Core.Entities;

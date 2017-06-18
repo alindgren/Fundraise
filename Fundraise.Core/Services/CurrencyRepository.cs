@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Fundraise.Core.Entities;
+﻿using Fundraise.Core.Entities;
 
 namespace Fundraise.Core.Services
 {
@@ -16,7 +13,7 @@ namespace Fundraise.Core.Services
 
         public Currency Create(string code, string symbol, string name)
         {
-            var currency = new Currency(code, symbol, name);
+            var currency = new Currency() { Code = code, Symbol = symbol, Name = name };
             _context.Currencies.Add(currency);
             _context.SaveChanges();
             return currency;
