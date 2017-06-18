@@ -11,6 +11,7 @@ namespace Fundraise.Core.Tests
     public class CampaignTests
     {
         private ICampaignRepository _campaignRepository;
+        private Currency usd;
 
         public CampaignTests()
         {
@@ -24,12 +25,17 @@ namespace Fundraise.Core.Tests
 
             var context = new FundraiseContext(builder.Options);
             _campaignRepository = new CampaignRepository(context);
+
+            var currencyRepository = new CurrencyRepository(context);
+            usd = currencyRepository.FindByCode("USD");
+            if (usd == null)
+                usd = currencyRepository.Create("USD", "$", "US Dollar");
         }
 
         [TestMethod]
         public void CreateCampaign()
         {
-            var campaign = _campaignRepository.Create("test campaign");
+            var campaign = _campaignRepository.Create("test campaign", usd.Code);
             Assert.IsTrue(campaign.Name == "test campaign", "name matches");
             Assert.IsTrue(campaign.Id != null && campaign.Id.ToString() != "00000000-0000-0000-0000-000000000000", "id is set");
             Assert.IsFalse(campaign.IsActive, "'test campaign' was created but is not active");
@@ -39,7 +45,7 @@ namespace Fundraise.Core.Tests
         [TestMethod]
         public void CreateCampaignWithEndDate()
         {
-            var campaign = _campaignRepository.Create("test campaign with end date", System.DateTime.Now.AddYears(1));
+            var campaign = _campaignRepository.Create("test campaign with end date", usd.Code, System.DateTime.Now.AddYears(1));
             Assert.IsTrue(campaign.Name == "test campaign with end date", "name matches");
             Assert.IsNotNull(campaign.EndDate);
             Assert.IsTrue(campaign.Id != null && campaign.Id.ToString() != "00000000-0000-0000-0000-000000000000", "id is set");
@@ -59,7 +65,7 @@ namespace Fundraise.Core.Tests
         [TestMethod]
         public void Exists()
         {
-            _campaignRepository.Create("test campaign exists");
+            _campaignRepository.Create("test campaign exists", usd.Code);
             Assert.IsTrue(_campaignRepository.Exists("test campaign exists"));
             Assert.IsFalse(_campaignRepository.Exists("no match"));
         }
@@ -67,7 +73,7 @@ namespace Fundraise.Core.Tests
         [TestMethod]
         public void CreateAndCloseCampaign()
         {
-            var campaign = _campaignRepository.Create("test to close campaign");
+            var campaign = _campaignRepository.Create("test to close campaign", usd.Code);
             _campaignRepository.Close(campaign.Id);
 
             var campaign2 = _campaignRepository.FindById(campaign.Id);

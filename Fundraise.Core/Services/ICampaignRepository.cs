@@ -6,7 +6,7 @@ namespace Fundraise.Core.Services
 {
     public interface ICampaignRepository
     {
-        Campaign Create(string name, DateTime? endDate = null);
+        Campaign Create(string name, string defaultCurrencyCode, DateTime? endDate = null);
         IEnumerable<Campaign> GetAll();
         Campaign FindById(Guid id);
         IEnumerable<Campaign> FindByName(string name);
