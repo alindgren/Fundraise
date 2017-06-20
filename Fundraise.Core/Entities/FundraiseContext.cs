@@ -13,5 +13,6 @@ namespace Fundraise.Core.Entities
         public DbSet<Campaign> Campaigns { get; set; }
         public DbSet<Fundraiser> Fundraisers { get; set; }
         public DbSet<Currency> Currencies { get; set; }
+        public DbSet<Donation> Donations { get; set; }
     }
 }

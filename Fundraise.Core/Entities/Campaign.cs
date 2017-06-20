@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Fundraise.Core.Entities
@@ -20,5 +21,7 @@ namespace Fundraise.Core.Entities
 
         public bool IsActive { get; set; }
         public DateTime EndDate { get; internal set; }
+
+        public List<Donation> Donations { get; set; }
     }
 }
