@@ -20,5 +20,20 @@ namespace Fundraise.Core.Entities
 
         [Required]
         public DonationStatus Status { get; set; }
+
+        /// <summary>
+        /// The amount of the donation.
+        /// </summary>
+        public double Amount { get; set; }
+
+        /// <summary>
+        /// The currency of the donation
+        /// </summary>
+        public Currency Currency { get; set; }
+
+        /// <summary>
+        /// The amount of the donation converted into the default currency
+        /// </summary>
+        public double AmountInDefaultCurrency { get; set; }
     }
 }
