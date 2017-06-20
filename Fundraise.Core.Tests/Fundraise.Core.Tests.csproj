@@ -172,6 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CampaignTests.cs" />
+    <Compile Include="DonationTests.cs" />
     <Compile Include="FundraiserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
