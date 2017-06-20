@@ -8,6 +8,6 @@ namespace Fundraise.Core.Services
     {
         Donation Create(Campaign campaign, DonationStatus status, string donorDisplayName = null, 
             string referenceNumber = null);
-        IEnumerable<Donation> GetAll();
+        IEnumerable<Donation> GetAll(Guid campaignId);
     }
 }

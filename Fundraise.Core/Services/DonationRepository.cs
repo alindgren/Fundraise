@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using Fundraise.Core.Entities;
 
 namespace Fundraise.Core.Services
@@ -22,9 +22,9 @@ namespace Fundraise.Core.Services
             return donation;
         }
 
-        public IEnumerable<Donation> GetAll()
+        public IEnumerable<Donation> GetAll(Guid campaignId)
         {
-            throw new NotImplementedException();
+            return _context.Donations.Where(x => x.CampaignId == campaignId);
         }
     }
 }
