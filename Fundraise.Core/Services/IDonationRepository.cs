@@ -6,8 +6,8 @@ namespace Fundraise.Core.Services
 {
     public interface IDonationRepository
     {
-        Donation Create(Campaign campaign, DonationStatus status, string donorDisplayName = null, 
-            string referenceNumber = null);
+        Donation Create(Campaign campaign, DonationStatus status, double amount, string currencyCode, 
+            double amountInDefaultCurrency, string donorDisplayName = null, string referenceNumber = null);
         IEnumerable<Donation> GetAll(Guid campaignId);
     }
 }

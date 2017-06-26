@@ -24,16 +24,19 @@ namespace Fundraise.Core.Entities
         /// <summary>
         /// The amount of the donation.
         /// </summary>
+        [Required]
         public double Amount { get; set; }
 
         /// <summary>
-        /// The currency of the donation
+        /// The currency code for the donation amount
         /// </summary>
-        public Currency Currency { get; set; }
+        [Required]
+        public string CurrencyCode { get; set; }
 
         /// <summary>
         /// The amount of the donation converted into the default currency
         /// </summary>
+        [Required]
         public double AmountInDefaultCurrency { get; set; }
     }
 }
