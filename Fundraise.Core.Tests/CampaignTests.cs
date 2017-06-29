@@ -4,6 +4,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Fundraise.Core.Services;
 using Fundraise.Core.Entities;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Fundraise.Core.Tests
 {
@@ -45,7 +47,7 @@ namespace Fundraise.Core.Tests
         [TestMethod]
         public void CreateCampaignWithEndDate()
         {
-            var campaign = _campaignRepository.Create("test campaign with end date", usd.Code, System.DateTime.Now.AddYears(1));
+            var campaign = _campaignRepository.Create("test campaign with end date", usd.Code, null, System.DateTime.Now.AddYears(1));
             Assert.IsTrue(campaign.Name == "test campaign with end date", "name matches");
             Assert.IsNotNull(campaign.EndDate);
             Assert.IsTrue(campaign.Id != null && campaign.Id.ToString() != "00000000-0000-0000-0000-000000000000", "id is set");
@@ -93,5 +95,28 @@ namespace Fundraise.Core.Tests
         {
             _campaignRepository.Close(Guid.NewGuid());
         }
-     }
+
+        [TestMethod]
+        public void CreateCampaignWithExtendedData()
+        {
+            var json = JsonConvert.DeserializeObject<JObject>(@"{""test"":""Hello World"",""test2"":123}");
+            var campaign = _campaignRepository.Create("campaign with extended data", usd.Code, json);
+
+            var campaign2 = _campaignRepository.FindById(campaign.Id);
+            Assert.IsTrue(campaign2.ExtendedData.HasValues);
+            Console.WriteLine(campaign2.ExtendedData["test"].Value<string>());
+            Assert.IsTrue(campaign2.ExtendedData.Value<string>("test") == "Hello World");
+        }
+
+        //[TestMethod]
+        //public void SetCampaignExtendedDataNull()
+        //{
+        //    var json = JsonConvert.DeserializeObject<JObject>(@"{""test"":""Hello World"",""test2"":123}");
+        //    var campaign = _campaignRepository.Create("campaign with extended data", usd.Code, json);
+
+        //    var campaign2 = _campaignRepository.FindById(campaign.Id);
+        //    campaign2.ExtendedData = null;
+            
+        //}
+    }
 }

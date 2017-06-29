@@ -1,11 +1,17 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Fundraise.Core.Entities
 {
     public class Campaign
     {
+        // https://docs.microsoft.com/en-us/ef/core/modeling/backing-field
+        private string _extendedData;
+
         [Key]
         public Guid Id { get; set; }
 
@@ -23,5 +29,18 @@ namespace Fundraise.Core.Entities
         public DateTime EndDate { get; internal set; }
 
         public List<Donation> Donations { get; set; }
+
+        [NotMapped]
+        public JObject ExtendedData
+        {
+            get
+            {
+                return JsonConvert.DeserializeObject<JObject>(string.IsNullOrEmpty(_extendedData) ? "{}" : _extendedData);
+            }
+            set
+            {
+                _extendedData = value.ToString();
+            }
+        }
     }
 }

@@ -28,7 +28,7 @@ namespace Fundraise.Core.Tests
             _donationRepository = new DonationRepository(context);
 
             var campaignRepository = new CampaignRepository(context);
-            _testCampaign = campaignRepository.Create("test", "USD", null);
+            _testCampaign = campaignRepository.Create("test", "USD", null, null);
         }
 
         [TestMethod]

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Fundraise.Core.Entities;
+using Newtonsoft.Json.Linq;
 
 namespace Fundraise.Core.Services
 {
@@ -14,9 +15,13 @@ namespace Fundraise.Core.Services
             _context = context;
         }
 
-        public Campaign Create(string name, string defaultCurrencyCode, DateTime? endDate)
+        public Campaign Create(string name, string defaultCurrencyCode, JObject extendedData, DateTime? endDate)
         {
             var campaign = new Campaign { Name = name, DefaultCurrencyCode = defaultCurrencyCode };
+            if (extendedData != null)
+            {
+                campaign.ExtendedData = extendedData;
+            }
             if (endDate.HasValue)
                 campaign.EndDate = endDate.Value;
             _context.Campaigns.Add(campaign);
