@@ -39,7 +39,14 @@ namespace Fundraise.Core.Entities
             }
             set
             {
-                _extendedData = value.ToString();
+                if (value == null)
+                {
+                    _extendedData = null;
+                }
+                else
+                {
+                    _extendedData = value.ToString();
+                }
             }
         }
     }

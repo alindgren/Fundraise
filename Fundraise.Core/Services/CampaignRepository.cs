@@ -53,6 +53,13 @@ namespace Fundraise.Core.Services
             return _context.Campaigns.Find(id);
         }
 
+        public Campaign Update(Campaign campaign)
+        {
+            var updateCampaign = _context.Update(campaign);
+            _context.SaveChanges();
+            return updateCampaign.Entity;
+        }
+
         public void Close(Guid id)
         {
             var campaign = this.FindById(id);

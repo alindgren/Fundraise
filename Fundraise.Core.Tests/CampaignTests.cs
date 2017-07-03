@@ -73,6 +73,16 @@ namespace Fundraise.Core.Tests
         }
 
         [TestMethod]
+        public void UpdateCampaignName()
+        {
+            var origCampaign =_campaignRepository.Create("test campaign for updating", usd.Code);
+            origCampaign.Name = "new campaign name";
+            _campaignRepository.Update(origCampaign);
+            var updatedCampaign = _campaignRepository.FindById(origCampaign.Id);
+            Assert.AreEqual<string>("new campaign name", updatedCampaign.Name);
+        }
+
+        [TestMethod]
         public void CreateAndCloseCampaign()
         {
             var campaign = _campaignRepository.Create("test to close campaign", usd.Code);
@@ -108,15 +118,18 @@ namespace Fundraise.Core.Tests
             Assert.IsTrue(campaign2.ExtendedData.Value<string>("test") == "Hello World");
         }
 
-        //[TestMethod]
-        //public void SetCampaignExtendedDataNull()
-        //{
-        //    var json = JsonConvert.DeserializeObject<JObject>(@"{""test"":""Hello World"",""test2"":123}");
-        //    var campaign = _campaignRepository.Create("campaign with extended data", usd.Code, json);
+        [TestMethod]
+        public void SetCampaignExtendedDataNull()
+        {
+            var json = JsonConvert.DeserializeObject<JObject>(@"{""test"":""Hello World"",""test2"":123}");
+            var campaign = _campaignRepository.Create("campaign with extended data", usd.Code, json);
 
-        //    var campaign2 = _campaignRepository.FindById(campaign.Id);
-        //    campaign2.ExtendedData = null;
-            
-        //}
+            var campaign2 = _campaignRepository.FindById(campaign.Id);
+            campaign2.ExtendedData = null;
+            _campaignRepository.Update(campaign2);
+
+            var campaign3 = _campaignRepository.FindById(campaign.Id);
+            Assert.IsFalse(campaign3.ExtendedData.HasValues);
+        }
     }
 }

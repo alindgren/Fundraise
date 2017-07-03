@@ -12,6 +12,7 @@ namespace Fundraise.Core.Services
         Campaign FindById(Guid id);
         IEnumerable<Campaign> FindByName(string name);
         bool Exists(string name);
+        Campaign Update(Campaign campaign);
         void Close(Guid id);
     }
 }
