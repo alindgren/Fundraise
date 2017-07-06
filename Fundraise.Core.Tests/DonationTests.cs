@@ -84,5 +84,23 @@ namespace Fundraise.Core.Tests
                 Console.WriteLine(d.Id);
             }
         }
+
+        [TestMethod]
+        public void GetDonationsByFundraiser()
+        {
+            var donation = _donationRepository.Create(_testCampaign, _testFundraiser, DonationStatus.Pledged, 10.00, _testCampaign.DefaultCurrencyCode, 10.00, "Alex", "001");
+            Console.WriteLine("donation created: " + donation.Id);
+
+            var donation2 = _donationRepository.Create(_testCampaign, null, DonationStatus.Completed, 10.00, "NIO", 299.25, "Test", "002");
+            Console.WriteLine("donation2 created: " + donation2.Id);
+
+            var donations = _donationRepository.GetByCampaign(_testCampaign.Id);
+            Assert.IsInstanceOfType(donations, typeof(IEnumerable<Donation>));
+            Assert.IsTrue(donations.Count() == 2, "count is 2");
+            foreach (var d in donations)
+            {
+                Console.WriteLine(d.Id);
+            }
+        }
     }
 }

@@ -3,6 +3,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Fundraise.Core.Services;
 using Fundraise.Core.Entities;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Fundraise.Core.Tests
 {
@@ -44,6 +46,18 @@ namespace Fundraise.Core.Tests
             Assert.IsTrue(fundraiser.Name == fundraiser2.Name);
             Assert.IsTrue(fundraiser2.CampaignId == testCampaign.Id);
             Console.WriteLine("type: " + fundraiser2.FundraiserType);
+        }
+
+        [TestMethod]
+        public void CreateFundraiserWithExtendedData()
+        {
+            var json = JsonConvert.DeserializeObject<JObject>(@"{""test"":""Hello World"",""test2"":123}");
+            var fundraiser = _fundraiserRepository.Create("test fundraiser with extended data", testCampaign.Id, FundraiserType.Individual, json);
+
+            var fundraiser2 = _fundraiserRepository.FindById(fundraiser.Id);
+            Assert.IsTrue(fundraiser2.ExtendedData.HasValues);
+            Console.WriteLine(fundraiser2.ExtendedData["test"].Value<string>());
+            Assert.IsTrue(fundraiser2.ExtendedData.Value<string>("test") == "Hello World");
         }
     }
 }
