@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Fundraise.Core.Entities
@@ -22,5 +23,7 @@ namespace Fundraise.Core.Entities
         public string Description { get; set; }
 
         public bool IsActive { get; set; }
+
+        public List<Donation> Donations { get; set; }
     }
 }
