@@ -38,9 +38,14 @@ namespace Fundraise.Core.Services
             return donation;
         }
 
-        public IEnumerable<Donation> GetAll(Guid campaignId)
+        public IEnumerable<Donation> GetByCampaign(Guid campaignId)
         {
             return _context.Donations.Where(x => x.CampaignId == campaignId);
+        }
+
+        public IEnumerable<Donation> GetByFundraiser(Guid fundraiserId)
+        {
+            return _context.Donations.Where(x => x.FundraiserId == fundraiserId);
         }
     }
 }

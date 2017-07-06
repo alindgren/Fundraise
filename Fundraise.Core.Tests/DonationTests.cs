@@ -55,7 +55,7 @@ namespace Fundraise.Core.Tests
         }
 
         [TestMethod]
-        public void GetAllDonations()
+        public void GetDonationsByCampaign()
         {
             var donation = _donationRepository.Create(_testCampaign, DonationStatus.Pledged, 10.00, _testCampaign.DefaultCurrencyCode, 10.00, "Alex", "001");
             Console.WriteLine("donation created: " + donation.Id);
@@ -63,7 +63,7 @@ namespace Fundraise.Core.Tests
             var donation2 = _donationRepository.Create(_testCampaign, DonationStatus.Completed, 10.00, "NIO", 299.25, "Test", "002");
             Console.WriteLine("donation2 created: " + donation2.Id);
 
-            var donations = _donationRepository.GetAll(_testCampaign.Id);
+            var donations = _donationRepository.GetByCampaign(_testCampaign.Id);
             Assert.IsInstanceOfType(donations, typeof(IEnumerable<Donation>));
             Assert.IsTrue(donations.Count() == 2, "count is 2");
             foreach (var d in donations)

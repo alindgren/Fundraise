@@ -8,6 +8,7 @@ namespace Fundraise.Core.Services
     {
         Donation Create(Campaign campaign, DonationStatus status, double amount, string currencyCode, 
             double amountInDefaultCurrency, string donorDisplayName = null, string referenceNumber = null);
-        IEnumerable<Donation> GetAll(Guid campaignId);
+        IEnumerable<Donation> GetByCampaign(Guid campaignId);
+        IEnumerable<Donation> GetByFundraiser(Guid fundraiserId);
     }
 }
