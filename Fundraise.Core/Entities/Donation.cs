@@ -11,8 +11,14 @@ namespace Fundraise.Core.Entities
 
         public Guid CampaignId { get; set; }
 
+        [Required]
         [ForeignKey("CampaignId")]
         public Campaign Campaign { get; set; }
+
+        public Guid FundraiserId { get; set; }
+
+        [ForeignKey("FundraiserId")]
+        public Fundraiser Fundraiser { get; set; }
 
         public string DonorDisplayName { get; set; }
 

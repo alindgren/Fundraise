@@ -1,10 +1,16 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Fundraise.Core.Entities
 {
     public class Fundraiser
     {
+        private string _extendedData;
+
         [Key]
         public Guid Id { get; set; }
 
@@ -22,5 +28,27 @@ namespace Fundraise.Core.Entities
         public string Description { get; set; }
 
         public bool IsActive { get; set; }
+
+        public List<Donation> Donations { get; set; }
+
+        [NotMapped]
+        public JObject ExtendedData
+        {
+            get
+            {
+                return JsonConvert.DeserializeObject<JObject>(string.IsNullOrEmpty(_extendedData) ? "{}" : _extendedData);
+            }
+            set
+            {
+                if (value == null)
+                {
+                    _extendedData = null;
+                }
+                else
+                {
+                    _extendedData = value.ToString();
+                }
+            }
+        }
     }
 }

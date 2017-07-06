@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Fundraise.Core.Entities;
+using Newtonsoft.Json.Linq;
 
 namespace Fundraise.Core.Services
 {
@@ -14,9 +15,13 @@ namespace Fundraise.Core.Services
             _context = context;
         }
 
-        public Fundraiser Create(string name, Guid campaignId, FundraiserType type)
+        public Fundraiser Create(string name, Guid campaignId, FundraiserType type, JObject extendedData = null)
         {
             var fundraiser = new Fundraiser { Name = name, CampaignId = campaignId, FundraiserType = type };
+            if (extendedData != null)
+            {
+                fundraiser.ExtendedData = extendedData;
+            }
             _context.Fundraisers.Add(fundraiser);
             _context.SaveChanges();
             return fundraiser;
@@ -39,6 +44,13 @@ namespace Fundraise.Core.Services
         public Fundraiser FindById(Guid id)
         {
             return _context.Fundraisers.Find(id);
+        }
+
+        public Fundraiser Update(Fundraiser fundraiser)
+        {
+            var updatedFundraiser = _context.Update(fundraiser);
+            _context.SaveChanges();
+            return updatedFundraiser.Entity;
         }
 
         public void Close(Guid id)

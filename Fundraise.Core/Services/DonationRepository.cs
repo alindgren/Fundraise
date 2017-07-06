@@ -14,12 +14,18 @@ namespace Fundraise.Core.Services
             _context = context;
         }
 
-        public Donation Create(Campaign campaign, DonationStatus status, double amount, string currencyCode,
+        public Donation Create(Campaign campaign, Fundraiser fundraiser, DonationStatus status, double amount, string currencyCode,
             double amountInDefaultCurrency, string donorDisplayName = null, string referenceNumber = null)
         {
+            if (fundraiser != null && fundraiser.CampaignId != campaign.Id) // validate campaign
+            {
+                throw new InvalidOperationException("fundraiser campaign id does not match");
+            }
+
             var donation = new Donation
             {
                 Campaign = campaign,
+                Fundraiser = fundraiser,
                 Status = status,
                 Amount = amount,
                 CurrencyCode = currencyCode,
@@ -30,7 +36,7 @@ namespace Fundraise.Core.Services
 
             if (currencyCode == campaign.DefaultCurrencyCode && amount != amountInDefaultCurrency)
             {
-                throw new Exception("invalid amount (does not match amount in default currency)");
+                throw new InvalidOperationException("invalid amount (does not match amount in default currency)");
             }
 
             _context.Donations.Add(donation);
@@ -38,9 +44,14 @@ namespace Fundraise.Core.Services
             return donation;
         }
 
-        public IEnumerable<Donation> GetAll(Guid campaignId)
+        public IEnumerable<Donation> GetByCampaign(Guid campaignId)
         {
             return _context.Donations.Where(x => x.CampaignId == campaignId);
+        }
+
+        public IEnumerable<Donation> GetByFundraiser(Guid fundraiserId)
+        {
+            return _context.Donations.Where(x => x.FundraiserId == fundraiserId);
         }
     }
 }
