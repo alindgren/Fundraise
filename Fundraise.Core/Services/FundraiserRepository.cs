@@ -46,6 +46,13 @@ namespace Fundraise.Core.Services
             return _context.Fundraisers.Find(id);
         }
 
+        public Fundraiser Update(Fundraiser fundraiser)
+        {
+            var updatedFundraiser = _context.Update(fundraiser);
+            _context.SaveChanges();
+            return updatedFundraiser.Entity;
+        }
+
         public void Close(Guid id)
         {
             var fundraiser = this.FindById(id);

@@ -12,6 +12,7 @@ namespace Fundraise.Core.Services
         Fundraiser FindById(Guid id);
         IEnumerable<Fundraiser> FindByName(string name);
         bool Exists(string name);
+        Fundraiser Update(Fundraiser fundraiser);
         void Close(Guid id);
     }
 }

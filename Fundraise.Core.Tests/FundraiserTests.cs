@@ -59,5 +59,15 @@ namespace Fundraise.Core.Tests
             Console.WriteLine(fundraiser2.ExtendedData["test"].Value<string>());
             Assert.IsTrue(fundraiser2.ExtendedData.Value<string>("test") == "Hello World");
         }
+
+        [TestMethod]
+        public void UpdateFundraiserName()
+        {
+            var origFundraiser = _fundraiserRepository.Create("test fundraiser for updating", testCampaign.Id, FundraiserType.Individual);
+            origFundraiser.Name = "new fundraiser name";
+            _fundraiserRepository.Update(origFundraiser);
+            var updatedCampaign = _fundraiserRepository.FindById(origFundraiser.Id);
+            Assert.AreEqual<string>("new fundraiser name", updatedCampaign.Name);
+        }
     }
 }
