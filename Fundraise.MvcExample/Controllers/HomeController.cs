@@ -8,8 +8,18 @@ namespace Fundraise.MvcExample.Controllers
 {
     public class HomeController : Controller
     {
+        private Core.Services.ICampaignRepository _campaignRepository; 
+
+        //public HomeController() { }
+        public HomeController(Fundraise.Core.Services.CampaignRepository campaignRepository)
+        {
+            _campaignRepository = campaignRepository;
+        }
+
         public ActionResult Index()
         {
+            var x = _campaignRepository.FindByName("test");
+
             return View();
         }
 
