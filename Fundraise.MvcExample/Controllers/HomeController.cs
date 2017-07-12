@@ -3,22 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Fundraise.Core.Services;
 
 namespace Fundraise.MvcExample.Controllers
 {
     public class HomeController : Controller
     {
-        private Core.Services.ICampaignRepository _campaignRepository; 
+        private ICampaignRepository _campaignRepository;
+        private FundraiserRepository _fundraiserRepository;
 
-        //public HomeController() { }
-        public HomeController(Fundraise.Core.Services.CampaignRepository campaignRepository)
+        public HomeController(CampaignRepository campaignRepository, FundraiserRepository fundraiserRepository)
         {
             _campaignRepository = campaignRepository;
+            _fundraiserRepository = fundraiserRepository;
         }
 
         public ActionResult Index()
         {
-            var x = _campaignRepository.FindByName("test");
+            //var campaign = _campaignRepository.Create("Nicaragua", "USD");
+            //_fundraiserRepository.Create("Alex's fundraiser for school supplies", campaign.Id, Core.Entities.FundraiserType.Individual);
+            //_fundraiserRepository.Create("Deanna's fundraiser for school supplies", campaign.Id, Core.Entities.FundraiserType.Individual);
+
+
+            //var x = _campaignRepository.FindByName("test");
+            var z = _fundraiserRepository.GetAll();
 
             return View();
         }
