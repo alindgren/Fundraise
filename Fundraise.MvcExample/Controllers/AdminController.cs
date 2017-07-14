@@ -26,8 +26,12 @@ namespace Fundraise.MvcExample.Controllers
             var campaigns = _campaignRepository.GetAll().ToList();
             var adminViewModel = new AdminViewModel();
             adminViewModel.Campaigns = AutoMapper.Mapper.Map<List<Campaign>, List<CampaignViewModel>>(campaigns);
-
-            return View();
+            foreach (var campaign in adminViewModel.Campaigns)
+            {
+                var fundraisers = _fundraiserRepository.GetAll().ToList();
+                campaign.Fundraisers = AutoMapper.Mapper.Map<List<Fundraiser>, List<FundraiserViewModel>>(fundraisers);
+            }
+            return View(adminViewModel);
         }
 
         // GET: Admin/Details/5

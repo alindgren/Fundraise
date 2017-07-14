@@ -1,5 +1,35 @@
-﻿@{
+﻿@using Fundraise.MvcExample.Models
+@model AdminViewModel
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<h1>Admin</h1>
+<ul class="list-group">
+@foreach (var campaign in Model.Campaigns)
+{
+    <li class="list-group-item">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">@campaign.Name</div>
+            @*<div class="panel-body">
+                <p>description goes here</p>
+            </div>*@
 
-
+            @if (campaign.Fundraisers.Count > 0)
+            {
+                <ul class="list-group">
+                    @foreach (var fundraiser in campaign.Fundraisers)
+                    {
+                        <li class="list-group-item">@fundraiser.Name</li>
+                    }
+                </ul>
+            } else
+            {
+                <span>This campaign has no fundraisers</span>
+            }
+        </div>
+        <button type="button" class="btn btn-default">New Fundraiser</button>
+    </li>
+}
+</ul>
+<button type="button" class="btn btn-default">New Campaign</button>

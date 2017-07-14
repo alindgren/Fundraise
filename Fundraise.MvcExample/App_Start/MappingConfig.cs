@@ -14,6 +14,7 @@ namespace Fundraise.MvcExample
             AutoMapper.Mapper.Initialize(config =>
             {
                 config.CreateMap<Campaign, CampaignViewModel>();
+                config.CreateMap<Fundraiser, FundraiserViewModel>();
             });
         }
     }
