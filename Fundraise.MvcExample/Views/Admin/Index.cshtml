@@ -10,7 +10,7 @@
     <li class="list-group-item">
         <div class="panel panel-default">
             <!-- Default panel contents -->
-            <div class="panel-heading">@campaign.Name</div>
+            <div class="panel-heading">@Html.ActionLink(campaign.Name, "CampaignDetail", "Admin", new { id = campaign.Id }, null)</div>
             @*<div class="panel-body">
                 <p>description goes here</p>
             </div>*@

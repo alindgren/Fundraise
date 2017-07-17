@@ -46,6 +46,11 @@ namespace Fundraise.Core.Services
             return _context.Fundraisers.Find(id);
         }
 
+        public IEnumerable<Fundraiser> FindByCampaign(Guid campaignId)
+        {
+            return _context.Fundraisers.Where(x => x.CampaignId == campaignId).OrderBy(c => c.Name).ToList();
+        }
+
         public Fundraiser Update(Fundraiser fundraiser)
         {
             var updatedFundraiser = _context.Update(fundraiser);

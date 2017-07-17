@@ -11,6 +11,7 @@ namespace Fundraise.Core.Services
         IEnumerable<Fundraiser> GetAll();
         Fundraiser FindById(Guid id);
         IEnumerable<Fundraiser> FindByName(string name);
+        IEnumerable<Fundraiser> FindByCampaign(Guid campaignId);
         bool Exists(string name);
         Fundraiser Update(Fundraiser fundraiser);
         void Close(Guid id);

@@ -26,7 +26,7 @@ namespace Fundraise.Core.Entities
         public string Description { get; set; }
 
         public bool IsActive { get; set; }
-        public DateTime EndDate { get; internal set; }
+        public DateTime? EndDate { get; internal set; }
 
         public List<Donation> Donations { get; set; }
 

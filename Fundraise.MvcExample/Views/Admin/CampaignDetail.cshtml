@@ -1,0 +1,25 @@
+﻿@using Fundraise.MvcExample.Models
+@model CampaignFormViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>@Model.Name</h2>
+
+<strong>End date:</strong>
+@{ 
+    if (Model.EndDate == null)
+    {
+        <span>none</span>
+    }
+    else
+    {
+        <span>@Model.EndDate</span>
+    }
+}
+<br />
+
+<strong>Description:</strong>
+@Model.Description
+
+<br /><br />
+@Html.ActionLink("Edit", "CampaignEdit", "Admin", new { id = Model.Id }, null)

@@ -28,27 +28,29 @@ namespace Fundraise.MvcExample.Controllers
             adminViewModel.Campaigns = AutoMapper.Mapper.Map<List<Campaign>, List<CampaignViewModel>>(campaigns);
             foreach (var campaign in adminViewModel.Campaigns)
             {
-                var fundraisers = _fundraiserRepository.GetAll().ToList();
+                var fundraisers = _fundraiserRepository.FindByCampaign(campaign.Id).ToList();
                 campaign.Fundraisers = AutoMapper.Mapper.Map<List<Fundraiser>, List<FundraiserViewModel>>(fundraisers);
             }
             return View(adminViewModel);
         }
 
         // GET: Admin/Details/5
-        public ActionResult Details(int id)
+        public ActionResult CampaignDetail(Guid id)
         {
-            return View();
+            var campaign = _campaignRepository.FindById(id);
+            var campaignViewModel = AutoMapper.Mapper.Map<Campaign, CampaignFormViewModel>(campaign);
+            return View(campaignViewModel);
         }
 
         // GET: Admin/Create
-        public ActionResult Create()
+        public ActionResult CampaignCreate()
         {
-            return View();
+            return View(new CampaignFormViewModel());
         }
 
         // POST: Admin/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult CampaignCreate(CampaignFormViewModel model)
         {
             try
             {
@@ -63,14 +65,16 @@ namespace Fundraise.MvcExample.Controllers
         }
 
         // GET: Admin/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult CampaignEdit(Guid id)
         {
-            return View();
+            var campaign = _campaignRepository.FindById(id);
+            var campaignViewModel = AutoMapper.Mapper.Map<Campaign, CampaignFormViewModel>(campaign);
+            return View(campaignViewModel);
         }
 
         // POST: Admin/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult CampaignEdit(CampaignFormViewModel model)
         {
             try
             {

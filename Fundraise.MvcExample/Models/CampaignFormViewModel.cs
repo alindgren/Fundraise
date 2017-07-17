@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace Fundraise.MvcExample.Models
 {
@@ -21,8 +19,13 @@ namespace Fundraise.MvcExample.Models
         [MaxLength(512)]
         public string Description { get; set; }
 
+        [DisplayName("Is active")]
         public bool IsActive { get; set; }
 
-        public DateTime EndDate { get; internal set; }
+        [DisplayName("End date")]
+        public DateTime? EndDate { get; set; }
+
+        [DisplayName("More Info URL")]
+        public string MoreInfoUrl { get; set; } // store in ExtendedData
     }
 }

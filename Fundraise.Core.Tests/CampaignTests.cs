@@ -53,7 +53,7 @@ namespace Fundraise.Core.Tests
             Assert.IsTrue(campaign.Id != null && campaign.Id.ToString() != "00000000-0000-0000-0000-000000000000", "id is set");
             Assert.IsFalse(campaign.IsActive, "'test campaign with end date' was created but is not active");
             Console.WriteLine("campaign.Id: " + campaign.Id);
-            Console.WriteLine("campaign.EndDate: " + campaign.EndDate.ToLongDateString());
+            Console.WriteLine("campaign.EndDate: " + campaign.EndDate.Value.ToLongDateString());
         }
 
         [TestMethod]
