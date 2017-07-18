@@ -9,14 +9,13 @@ namespace Fundraise.MvcExample.Models
         [Key]
         public Guid Id { get; set; }
 
-        [Required]
-        [MaxLength(50)]
+        [Required, MaxLength(50)]
         public string Name { get; set; }
 
-        [Required]
+        [Required, DisplayName("Currency"), DataType("CurrencyCode")]
         public string DefaultCurrencyCode { get; set; }
 
-        [MaxLength(512)]
+        [MaxLength(512), DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
         [DisplayName("Is active")]

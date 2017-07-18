@@ -78,9 +78,13 @@ namespace Fundraise.MvcExample.Controllers
         {
             try
             {
-                // TODO: Add update logic here
+                var campaign = _campaignRepository.FindById(model.Id);
+                campaign.Name = model.Name;
+                campaign.Description = model.Description;
+                campaign.DefaultCurrencyCode = model.DefaultCurrencyCode;
+                _campaignRepository.Update(campaign);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("CampaignDetail", new { id = campaign.Id });
             }
             catch
             {

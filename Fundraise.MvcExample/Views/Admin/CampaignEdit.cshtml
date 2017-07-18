@@ -3,10 +3,43 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>@Model.Name</h2>
 
-<strong>Emd date:</strong>
-@Model.EndDate<br />
+<div class="container">
+    <div class="row">
+        <h1>Edit Campaign</h1>
+    </div>
+    <div class="row">
 
-<strong>Description</strong>
-@Model.Description
+        <form id="campaignForm" novalidate action="@Url.Action("CampaignEdit", "Admin")" method="post">
+            <div class="col-lg-10">
+
+                @Html.ValidationSummary()
+
+                @Html.HiddenFor(p => p.Id)
+
+                <div class="form-inline">
+                    <div class="form-group">
+                        @Html.LabelFor(p => p.Name)
+                        @Html.EditorFor(p => p.Name)
+                        @Html.ValidationMessageFor(p => p.Name, "*")
+                    </div>
+                    <div>
+                        @Html.LabelFor(p => p.Description)
+                        @Html.EditorFor(p => p.Description)
+                    </div>
+                    <div>
+                        @Html.LabelFor(p => p.DefaultCurrencyCode)
+                        @Html.EditorFor(p => p.DefaultCurrencyCode)
+                    </div>
+                    <div class="form-group pull-right">
+                        <a href="@Url.Action("CampaignDetail", "Admin", new { id = Model.Id }, null)" class="btn btn-default">Cancel</a>
+                        <input type="submit" class="btn btn-success" value="Save" />
+                    </div>
+                </div>
+
+            </div>
+        </form>
+
+    </div>
+</div>
+

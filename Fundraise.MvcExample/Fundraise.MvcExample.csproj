@@ -423,6 +423,9 @@
     <Content Include="Views\Admin\CampaignCreate.cshtml" />
     <Content Include="Views\Admin\CampaignDetail.cshtml" />
     <Content Include="Views\Admin\CampaignEdit.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\MultilineText.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\CurrencyCode.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

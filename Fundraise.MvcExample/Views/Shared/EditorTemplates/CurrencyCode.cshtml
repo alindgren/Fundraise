@@ -1,0 +1,20 @@
+﻿@model string
+
+@{ 
+    // todo, pull dynamically using CurrencyRepository
+    var availableCurrencies = new List<SelectListItem>();
+    availableCurrencies.Add(new SelectListItem
+    {
+        Text = "Nicaraguan Cordabas",
+        Value = "NIO",
+        Selected = "NIO" == Model
+    });
+    availableCurrencies.Add(new SelectListItem
+    {
+        Text = "US Dollars",
+        Value = "USD",
+        Selected = "USD" == Model
+    });
+}
+
+@Html.DropDownList("", availableCurrencies, new { @class = "from-control" })
