@@ -54,11 +54,13 @@ namespace Fundraise.MvcExample.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
+                var campaign = _campaignRepository.Create(model.Name, model.DefaultCurrencyCode);
+                campaign.Description = model.Description;
+                _campaignRepository.Update(campaign);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("CampaignDetail", new { id = campaign.Id });
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
             }
