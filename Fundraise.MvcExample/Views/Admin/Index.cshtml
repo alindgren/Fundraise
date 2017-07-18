@@ -3,32 +3,34 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1>Admin</h1>
+<div class="page-header">
+    <h1>Fundraise Admin</h1>
+    <h2>Campaigns</h2>
+</div>
 <ul class="list-group">
 @foreach (var campaign in Model.Campaigns)
 {
     <li class="list-group-item">
         <div class="panel panel-default">
             <!-- Default panel contents -->
-            <div class="panel-heading">@Html.ActionLink(campaign.Name, "CampaignDetail", "Admin", new { id = campaign.Id }, null)</div>
-            @*<div class="panel-body">
-                <p>description goes here</p>
-            </div>*@
-
-            @if (campaign.Fundraisers.Count > 0)
-            {
-                <ul class="list-group">
-                    @foreach (var fundraiser in campaign.Fundraisers)
-                    {
-                        <li class="list-group-item">@fundraiser.Name</li>
-                    }
-                </ul>
-            } else
-            {
-                <span>This campaign has no fundraisers</span>
-            }
+            <div class="panel-heading"><h3>@Html.ActionLink(campaign.Name, "CampaignDetail", "Admin", new { id = campaign.Id }, null)</h3></div>
+            <div class="panel-body">
+                @if (campaign.Fundraisers.Count > 0)
+                {
+                    <ul class="list-group">
+                        @foreach (var fundraiser in campaign.Fundraisers)
+                        {
+                            <li class="list-group-item">@fundraiser.Name</li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <p class="h4">This campaign has no fundraisers.</p>
+                }
+                <button type="button" class="btn btn-default">New Fundraiser</button>
+            </div>
         </div>
-        <button type="button" class="btn btn-default">New Fundraiser</button>
     </li>
 }
 </ul>
