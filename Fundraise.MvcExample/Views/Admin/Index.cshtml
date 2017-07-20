@@ -28,8 +28,7 @@
                 {
                     <p class="h4">This campaign has no fundraisers.</p>
                 }
-                @Html.ActionLink("New Fundraiser", "FundraiserCreate", new { campaignId = campaign.Id}, null)
-                <button type="button" class="btn btn-default">New Fundraiser</button>
+                @Html.ActionLink("New Fundraiser", "FundraiserCreate", new { campaignId = campaign.Id}, new { @class = "btn btn-default" })
             </div>
         </div>
     </li>
