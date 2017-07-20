@@ -94,6 +94,52 @@ namespace Fundraise.MvcExample.Controllers
             }
         }
 
+        public ActionResult FundraiserCreate(Guid campaignId)
+        {
+            return View(new FundraiserFormViewModel() { CampaignId = campaignId });
+        }
+
+        [HttpPost]
+        public ActionResult FundraiserCreate(FundraiserFormViewModel model)
+        {
+            try
+            {
+                var fundraiser = _fundraiserRepository.Create(model.Name, model.CampaignId, FundraiserType.Individual);
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
+        }
+
+        public ActionResult FundraiserEdit(Guid id)
+        {
+            var fundraiser = _fundraiserRepository.FindById(id);
+            var fundraiserViewModel = AutoMapper.Mapper.Map<Fundraiser, FundraiserFormViewModel>(fundraiser);
+            return View(fundraiserViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult FundraiserEdit(FundraiserFormViewModel model)
+        {
+            try
+            {
+                var fundraiser = _fundraiserRepository.FindById(model.Id);
+                fundraiser.Name = model.Name;
+                fundraiser.Description = model.Description;
+                fundraiser.IsActive = model.IsActive;
+                _fundraiserRepository.Update(fundraiser);
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
         // GET: Admin/Delete/5
         public ActionResult Delete(int id)
         {

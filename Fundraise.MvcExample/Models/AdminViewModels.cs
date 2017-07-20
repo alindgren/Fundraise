@@ -23,6 +23,8 @@ namespace Fundraise.MvcExample.Models
 
     public class FundraiserViewModel
     {
+        public Guid Id { get; set; }
+
         [MaxLength(50)]
         public string Name { get; set; }
     }

@@ -1,0 +1,44 @@
+﻿@using Fundraise.MvcExample.Models
+@model FundraiserFormViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <h1>Edit Fundraiser</h1>
+    </div>
+    <div class="row">
+
+        <form id="campaignForm" novalidate action="@Url.Action("FundraiserEdit", "Admin")" method="post">
+            <div class="col-lg-10">
+
+                @Html.ValidationSummary()
+
+                @Html.HiddenFor(p => p.Id)
+
+                <div class="form-group">
+                    @Html.LabelFor(p => p.Name)
+                    @Html.EditorFor(p => p.Name)
+                    @Html.ValidationMessageFor(p => p.Name, "*")
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(p => p.Description)
+                    @Html.EditorFor(p => p.Description)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(p => p.IsActive)
+                    @Html.EditorFor(p => p.IsActive)
+                </div>
+
+                <div class="form-group pull-right">
+                    <a href="@Url.Action("Index", "Admin", new { id = Model.Id }, null)" class="btn btn-default">Cancel</a>
+                    <input type="submit" class="btn btn-success" value="Save" />
+                </div>
+
+            </div>
+        </form>
+
+    </div>
+</div>
+

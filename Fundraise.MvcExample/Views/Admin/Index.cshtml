@@ -20,7 +20,7 @@
                     <ul class="list-group">
                         @foreach (var fundraiser in campaign.Fundraisers)
                         {
-                            <li class="list-group-item">@fundraiser.Name</li>
+                            <li class="list-group-item">@Html.ActionLink(fundraiser.Name, "FundraiserEdit", "Admin", new { id = fundraiser.Id}, null)</li>
                         }
                     </ul>
                 }
@@ -28,6 +28,7 @@
                 {
                     <p class="h4">This campaign has no fundraisers.</p>
                 }
+                @Html.ActionLink("New Fundraiser", "FundraiserCreate", new { campaignId = campaign.Id}, null)
                 <button type="button" class="btn btn-default">New Fundraiser</button>
             </div>
         </div>
