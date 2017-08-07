@@ -343,6 +343,7 @@
     <Compile Include="Models\AdminViewModels.cs" />
     <Compile Include="Models\CampaignFormViewModel.cs" />
     <Compile Include="Models\FundraiserFormViewModel.cs" />
+    <Compile Include="Models\FundraisersViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

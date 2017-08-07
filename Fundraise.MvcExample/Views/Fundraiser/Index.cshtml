@@ -1,7 +1,34 @@
 ﻿@using Fundraise.MvcExample.Models
+@model FundraisersViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="page-header">
     <h1>Fundraisers</h1>
 </div>
+<ul class="list-group">
+    @foreach (var campaign in Model.Campaigns)
+    {
+        <li class="list-group-item">
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading"><h3>@campaign.Name</h3></div>
+                <div class="panel-body">
+                    @if (campaign.Fundraisers.Count > 0)
+                {
+                        <ul class="list-group">
+                            @foreach (var fundraiser in campaign.Fundraisers)
+                            {
+                                <li class="list-group-item">@Html.ActionLink(fundraiser.Name, "Index", "Fundraiser", new { id = fundraiser.Id }, null)</li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p class="h4">This campaign has no fundraisers.</p>
+                    }
+                </div>
+            </div>
+        </li>
+    }
+</ul>

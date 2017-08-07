@@ -26,7 +26,17 @@ namespace Fundraise.MvcExample.Controllers
         {
             if (!id.HasValue)
             {
-                return View();
+                var campaigns = _campaignRepository.GetAll().ToList();
+
+                var model = new FundraisersViewModel();
+                model.Campaigns = AutoMapper.Mapper.Map<List<Campaign>, List<CampaignViewModel>>(campaigns);
+                foreach (var campaign in model.Campaigns)
+                {
+                    var fundraisers = _fundraiserRepository.FindByCampaign(campaign.Id).ToList();
+                    campaign.Fundraisers = AutoMapper.Mapper.Map<List<Fundraiser>, List<FundraiserViewModel>>(fundraisers);
+                }
+
+                return View(model);
             }
 
             var fundraiser = _fundraiserRepository.FindById(id.Value);
