@@ -333,6 +333,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\FundraiserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -429,6 +430,8 @@
     <Content Include="Views\Shared\EditorTemplates\CurrencyCode.cshtml" />
     <Content Include="Views\Admin\FundraiserEdit.cshtml" />
     <Content Include="Views\Admin\FundraiserCreate.cshtml" />
+    <Content Include="Views\Fundraiser\Index.cshtml" />
+    <Content Include="Views\Fundraiser\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
