@@ -20,6 +20,9 @@ namespace Fundraise.Core.Entities
         [ForeignKey("FundraiserId")]
         public Fundraiser Fundraiser { get; set; }
 
+        [MaxLength(128)]
+        public string DonorUserId { get; set; }
+
         public string DonorDisplayName { get; set; }
 
         public string ReferenceNumber { get; set; }

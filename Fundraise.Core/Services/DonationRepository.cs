@@ -15,7 +15,7 @@ namespace Fundraise.Core.Services
         }
 
         public Donation Create(Campaign campaign, Fundraiser fundraiser, DonationStatus status, double amount, string currencyCode,
-            double amountInDefaultCurrency, string donorDisplayName = null, string referenceNumber = null)
+            double amountInDefaultCurrency, string donorUserId, string donorDisplayName = null, string referenceNumber = null)
         {
             if (fundraiser != null && fundraiser.CampaignId != campaign.Id) // validate campaign
             {
@@ -30,6 +30,7 @@ namespace Fundraise.Core.Services
                 Amount = amount,
                 CurrencyCode = currencyCode,
                 AmountInDefaultCurrency = amountInDefaultCurrency,
+                DonorUserId = donorUserId,
                 DonorDisplayName = donorDisplayName,
                 ReferenceNumber = referenceNumber
             };
@@ -52,6 +53,11 @@ namespace Fundraise.Core.Services
         public IEnumerable<Donation> GetByFundraiser(Guid fundraiserId)
         {
             return _context.Donations.Where(x => x.FundraiserId == fundraiserId);
+        }
+
+        public IEnumerable<Donation> GetByDonor(string userId)
+        {
+            return _context.Donations.Where(x => x.DonorUserId == userId);
         }
     }
 }
