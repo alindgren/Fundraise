@@ -1,13 +1,16 @@
 ﻿using Fundraise.Core.Entities;
 using Fundraise.Core.Services;
+using Microsoft.AspNet.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Owin;
+using Microsoft.Owin.Security;
 using Owin;
 using SimpleInjector;
 using SimpleInjector.Integration.Web;
 using SimpleInjector.Integration.Web.Mvc;
 using SimpleInjector.Lifestyles;
 using System.Reflection;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -34,12 +37,10 @@ namespace Fundraise.MvcExample
             }, Lifestyle.Scoped);
             container.Register<ICampaignRepository, CampaignRepository>(Lifestyle.Scoped);
 
+            var identityDbContext = Models.ApplicationDbContext.Create();
+            container.Register<IUserStore<Models.ApplicationUser>>(() => new Microsoft.AspNet.Identity.EntityFramework.UserStore<Models.ApplicationUser>(identityDbContext));
+
             container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
-
-            //Registration registration = container.GetRegistration(typeof(ICampaignRepository)).Registration;
-
-            //registration.SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent,
-            //    "Reason of suppression");
 
             DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(container));
 
@@ -57,6 +58,8 @@ namespace Fundraise.MvcExample
             MappingConfig.RegisterMaps();
 
             ConfigureAuth(app);
+            container.Register<IAuthenticationManager>(() => HttpContext.Current.GetOwinContext().Authentication);
+
         }
     }
 }
