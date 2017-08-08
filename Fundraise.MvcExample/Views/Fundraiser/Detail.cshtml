@@ -5,4 +5,5 @@
 }
 <div class="page-header">
     <h1>@Model.Name</h1>
+    @Html.ActionLink("Donate", "Donate", new { id = Model.Id }, new { @class = "btn btn-default" })
 </div>

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Stripe;
 
 namespace Fundraise.MvcExample.Controllers
 {
@@ -13,7 +14,7 @@ namespace Fundraise.MvcExample.Controllers
     {
 
         private ICampaignRepository _campaignRepository;
-        private FundraiserRepository _fundraiserRepository;
+        private IFundraiserRepository _fundraiserRepository;
 
         public FundraiserController(CampaignRepository campaignRepository, FundraiserRepository fundraiserRepository)
         {
@@ -46,6 +47,37 @@ namespace Fundraise.MvcExample.Controllers
             var fundraiserViewModel = AutoMapper.Mapper.Map<Fundraiser, FundraiserFormViewModel>(fundraiser);
 
             return View("Detail", fundraiserViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult Donate(Guid id)
+        {
+            var fundraiser = _fundraiserRepository.FindById(id);
+            var fundraiserViewModel = AutoMapper.Mapper.Map<Fundraiser, FundraiserFormViewModel>(fundraiser);
+
+            return View(fundraiserViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Donate(DonateFormViewModel model)
+        {
+            var fundraiser = _fundraiserRepository.FindById(model.FundraiserId);
+
+            if (model.DonationAmount > 0)
+            {
+                var chargeService = new StripeChargeService();
+                chargeService.Create(new StripeChargeCreateOptions()
+                {
+                    Amount = model.DonationAmount * 100,
+                    Currency = "usd",
+                    Description = fundraiser.Name,
+                    SourceTokenOrExistingSourceId = model.StripeToken
+                });
+            }
+            
+
+            var fundraiserViewModel = AutoMapper.Mapper.Map<Fundraiser, FundraiserFormViewModel>(fundraiser);
+            return View(fundraiserViewModel);
         }
     }
 }

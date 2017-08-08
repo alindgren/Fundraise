@@ -60,6 +60,7 @@ namespace Fundraise.MvcExample
             ConfigureAuth(app);
             container.Register<IAuthenticationManager>(() => HttpContext.Current.GetOwinContext().Authentication);
 
+            Stripe.StripeConfiguration.SetApiKey(System.Configuration.ConfigurationManager.AppSettings["StripeSecretKey"]);
         }
     }
 }

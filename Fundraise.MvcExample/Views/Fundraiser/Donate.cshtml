@@ -1,0 +1,73 @@
+﻿@using Fundraise.MvcExample.Models
+@model FundraiserFormViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="page-header">
+    <h1>Donate to @Model.Name</h1>
+</div>
+<div class="row">
+
+    <form action=""@Url.Action("Donate", "Fundraiser")" method="post" id="payment-form">
+        <div class="col-lg-10">
+            <div class="form-row">
+                <label for="DonationAmount">Amount</label>
+                <input type="number" name="DonationAmount" />
+            </div>
+            <div class="form-row">
+                <label for="card-element">
+                    Credit or debit card
+                </label>
+                <div id="card-element">
+                    <!-- a Stripe Element will be inserted here. -->
+                </div>
+
+                <!-- Used to display form errors -->
+                <div id="card-errors" role="alert"></div>
+            </div>
+            <input type="hidden" name="FundraiserId" value="@Model.Id" />
+            <input id="stripe-token" type="hidden" name="stripeToken" />
+            <input type="submit" class="submit" value="Submit Payment">
+        </div>
+    </form>
+    <script type="text/javascript">
+        var stripe = Stripe('@System.Configuration.ConfigurationManager.AppSettings["StripePublishableKey"]');
+        var elements = stripe.elements();
+        var card = elements.create('card');
+        card.mount('#card-element');
+
+        // Handle real-time validation errors from the card Element.
+        card.addEventListener('change', function (event) {
+            var displayError = document.getElementById('card-errors');
+            if (event.error) {
+                displayError.textContent = event.error.message;
+            } else {
+                displayError.textContent = '';
+            }
+        });
+
+        // Handle form submission
+        var form = document.getElementById('payment-form');
+        form.addEventListener('submit', function (event) {
+            if ($('#stripe-token').val() == '') {
+                event.preventDefault();
+
+                stripe.createToken(card).then(function (result) {
+                    if (result.error) {
+                        // Inform the user if there was an error
+                        var errorElement = document.getElementById('card-errors');
+                        errorElement.textContent = result.error.message;
+                    } else {
+                        // Send the token to your server
+                        $('#stripe-token').val(result.token.id);
+                        console.log(result.token.id);
+                    }
+                });
+            } else {
+                console.log($('#stripe-token').val());
+            }
+        });
+    </script>
+</div>
+@section headSection {
+}

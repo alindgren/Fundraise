@@ -6,7 +6,8 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
+    <script src="https://js.stripe.com/v3/"></script>
+    @RenderSection("headSection", false)
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">

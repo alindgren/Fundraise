@@ -157,6 +157,9 @@
     <Reference Include="SimpleInjector.Integration.Web.Mvc, Version=4.0.8.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
       <HintPath>..\packages\SimpleInjector.Integration.Web.Mvc.4.0.8\lib\net40\SimpleInjector.Integration.Web.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="Stripe.net, Version=10.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Stripe.net.10.4.0\lib\net45\Stripe.net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.AppContext, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.AppContext.4.3.0\lib\net463\System.AppContext.dll</HintPath>
@@ -342,6 +345,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModels.cs" />
     <Compile Include="Models\CampaignFormViewModel.cs" />
+    <Compile Include="Models\DonateFormViewModel.cs" />
     <Compile Include="Models\FundraiserFormViewModel.cs" />
     <Compile Include="Models\FundraisersViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -433,6 +437,7 @@
     <Content Include="Views\Admin\FundraiserCreate.cshtml" />
     <Content Include="Views\Fundraiser\Index.cshtml" />
     <Content Include="Views\Fundraiser\Detail.cshtml" />
+    <Content Include="Views\Fundraiser\Donate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
