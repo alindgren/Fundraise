@@ -36,6 +36,7 @@ namespace Fundraise.MvcExample
                 return new FundraiseContext(optionsBuilder.Options);
             }, Lifestyle.Scoped);
             container.Register<ICampaignRepository, CampaignRepository>(Lifestyle.Scoped);
+            container.Register<IDonationRepository, DonationRepository>(Lifestyle.Scoped);
 
             var identityDbContext = Models.ApplicationDbContext.Create();
             container.Register<IUserStore<Models.ApplicationUser>>(() => new Microsoft.AspNet.Identity.EntityFramework.UserStore<Models.ApplicationUser>(identityDbContext));

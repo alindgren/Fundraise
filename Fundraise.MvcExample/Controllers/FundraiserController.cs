@@ -15,11 +15,13 @@ namespace Fundraise.MvcExample.Controllers
 
         private ICampaignRepository _campaignRepository;
         private IFundraiserRepository _fundraiserRepository;
+        private IDonationRepository _donationRepository;
 
-        public FundraiserController(CampaignRepository campaignRepository, FundraiserRepository fundraiserRepository)
+        public FundraiserController(CampaignRepository campaignRepository, FundraiserRepository fundraiserRepository, IDonationRepository donationRepository)
         {
             _campaignRepository = campaignRepository;
             _fundraiserRepository = fundraiserRepository;
+            _donationRepository = donationRepository;
         }
 
         // GET: Fundraiser
@@ -62,19 +64,20 @@ namespace Fundraise.MvcExample.Controllers
         public ActionResult Donate(DonateFormViewModel model)
         {
             var fundraiser = _fundraiserRepository.FindById(model.FundraiserId);
+            var campaign = _campaignRepository.FindById(fundraiser.CampaignId);
 
             if (model.DonationAmount > 0)
             {
                 var chargeService = new StripeChargeService();
-                chargeService.Create(new StripeChargeCreateOptions()
+                var charge = chargeService.Create(new StripeChargeCreateOptions()
                 {
                     Amount = model.DonationAmount * 100,
                     Currency = "usd",
                     Description = fundraiser.Name,
                     SourceTokenOrExistingSourceId = model.StripeToken
                 });
+                _donationRepository.Create(campaign, fundraiser, DonationStatus.Completed, model.DonationAmount, "usd", model.DonationAmount, "test", "Alex L.", charge.Id);
             }
-            
 
             var fundraiserViewModel = AutoMapper.Mapper.Map<Fundraiser, FundraiserFormViewModel>(fundraiser);
             return View(fundraiserViewModel);
