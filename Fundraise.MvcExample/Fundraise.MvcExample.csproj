@@ -339,6 +339,7 @@
     <Compile Include="Controllers\FundraiserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -439,6 +440,7 @@
     <Content Include="Views\Fundraiser\Detail.cshtml" />
     <Content Include="Views\Fundraiser\Donate.cshtml" />
     <Content Include="Views\Fundraiser\Thanks.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
