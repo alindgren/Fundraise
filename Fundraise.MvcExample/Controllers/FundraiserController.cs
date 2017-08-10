@@ -7,6 +7,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Stripe;
+using Microsoft.AspNet.Identity;
+
 
 namespace Fundraise.MvcExample.Controllers
 {
@@ -76,11 +78,16 @@ namespace Fundraise.MvcExample.Controllers
                     Description = fundraiser.Name,
                     SourceTokenOrExistingSourceId = model.StripeToken
                 });
-                _donationRepository.Create(campaign, fundraiser, DonationStatus.Completed, model.DonationAmount, "usd", model.DonationAmount, "test", "Alex L.", charge.Id);
+                string userid = null;
+                if (User.Identity.IsAuthenticated)
+                {
+                    userid = User.Identity.GetUserId();
+                }
+                _donationRepository.Create(campaign, fundraiser, DonationStatus.Completed, model.DonationAmount, "usd", model.DonationAmount, userid, "Alex L.", charge.Id);
             }
 
             var fundraiserViewModel = AutoMapper.Mapper.Map<Fundraiser, FundraiserFormViewModel>(fundraiser);
-            return View(fundraiserViewModel);
+            return View("Thanks", fundraiserViewModel);
         }
     }
 }
