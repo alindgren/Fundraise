@@ -104,7 +104,7 @@ namespace Fundraise.MvcExample.Controllers
         {
             try
             {
-                var fundraiser = _fundraiserRepository.Create(model.Name, model.CampaignId, FundraiserType.Individual);
+                var fundraiser = _fundraiserRepository.Create(model.Name, model.CampaignId, FundraiserType.Individual, "test");
 
                 return RedirectToAction("Index");
             }

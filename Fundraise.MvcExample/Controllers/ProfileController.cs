@@ -12,8 +12,6 @@ namespace Fundraise.MvcExample.Controllers
 {
     public class ProfileController : Controller
     {
-
-
         private ICampaignRepository _campaignRepository;
         private IFundraiserRepository _fundraiserRepository;
         private IDonationRepository _donationRepository;
@@ -52,7 +50,8 @@ namespace Fundraise.MvcExample.Controllers
                 }
             }
 
-            model.Fundraisers = new List<FundraiserViewModel>();
+            var fundraisers = _fundraiserRepository.FindByCreator(userId).ToList();
+            model.Fundraisers = AutoMapper.Mapper.Map<List<Fundraiser>, List<FundraiserViewModel>>(fundraisers);
 
             return View(model);
             

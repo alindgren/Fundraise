@@ -8,7 +8,20 @@
 </div>
 <div class="row">
     <h2>My Fundraisers</h2>
-    <p>You do not have any fundraisers. @Html.ActionLink("Create one now", "Create", "Fundraiser", null, null).</p>
+    @if (Model.Fundraisers.Count < 1)
+    {
+        <p>You do not have any fundraisers. @Html.ActionLink("Create one now", "Create", "Fundraiser", null, null).</p>
+    }
+    else
+    {
+        <ul>
+            @foreach (var fundraiser in Model.Fundraisers)
+            {
+                <li>@Html.ActionLink(fundraiser.Name, "Index", "Fundraiser", new { id = fundraiser.Id }, null)</li>
+            }
+        </ul>
+        <p>@Html.ActionLink("Create another fundraiser", "Create", "Fundraiser", null, null).</p>
+    }
 </div>
 <div class="row">
     <h2>My Donations</h2>

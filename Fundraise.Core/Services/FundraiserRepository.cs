@@ -15,9 +15,9 @@ namespace Fundraise.Core.Services
             _context = context;
         }
 
-        public Fundraiser Create(string name, Guid campaignId, FundraiserType type, JObject extendedData = null)
+        public Fundraiser Create(string name, Guid campaignId, FundraiserType type, string creatorUserId, JObject extendedData = null)
         {
-            var fundraiser = new Fundraiser { Name = name, CampaignId = campaignId, FundraiserType = type, DateCreated = DateTime.Now, DateLastUpdated = DateTime.Now };
+            var fundraiser = new Fundraiser { Name = name, CampaignId = campaignId, FundraiserType = type, CreatorUserId = creatorUserId, DateCreated = DateTime.Now, DateLastUpdated = DateTime.Now };
             if (extendedData != null)
             {
                 fundraiser.ExtendedData = extendedData;
@@ -49,6 +49,11 @@ namespace Fundraise.Core.Services
         public IEnumerable<Fundraiser> FindByCampaign(Guid campaignId)
         {
             return _context.Fundraisers.Where(x => x.CampaignId == campaignId).OrderBy(c => c.Name).ToList();
+        }
+
+        public IEnumerable<Fundraiser> FindByCreator(string userId)
+        {
+            return _context.Fundraisers.Where(x => x.CreatorUserId == userId);
         }
 
         public Fundraiser Update(Fundraiser fundraiser)

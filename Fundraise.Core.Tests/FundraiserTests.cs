@@ -34,7 +34,7 @@ namespace Fundraise.Core.Tests
         [TestMethod]
         public void CreateFundraiser()
         {
-            var fundraiser = _fundraiserRepository.Create("test fundraiser", testCampaign.Id, FundraiserType.Individual);
+            var fundraiser = _fundraiserRepository.Create("test fundraiser", testCampaign.Id, FundraiserType.Individual, "test");
             Assert.IsTrue(fundraiser.Name == "test fundraiser", "name matches");
             Assert.IsTrue(fundraiser.Id != null && fundraiser.Id.ToString() != "00000000-0000-0000-0000-000000000000", "id is set");
             Assert.IsTrue(fundraiser.CampaignId == testCampaign.Id, "campaign id is set");
@@ -52,7 +52,7 @@ namespace Fundraise.Core.Tests
         public void CreateFundraiserWithExtendedData()
         {
             var json = JsonConvert.DeserializeObject<JObject>(@"{""test"":""Hello World"",""test2"":123}");
-            var fundraiser = _fundraiserRepository.Create("test fundraiser with extended data", testCampaign.Id, FundraiserType.Individual, json);
+            var fundraiser = _fundraiserRepository.Create("test fundraiser with extended data", testCampaign.Id, FundraiserType.Individual, "test", json);
 
             var fundraiser2 = _fundraiserRepository.FindById(fundraiser.Id);
             Assert.IsTrue(fundraiser2.ExtendedData.HasValues);
@@ -63,7 +63,7 @@ namespace Fundraise.Core.Tests
         [TestMethod]
         public void UpdateFundraiserName()
         {
-            var origFundraiser = _fundraiserRepository.Create("test fundraiser for updating", testCampaign.Id, FundraiserType.Individual);
+            var origFundraiser = _fundraiserRepository.Create("test fundraiser for updating", testCampaign.Id, FundraiserType.Individual, "test");
             origFundraiser.Name = "new fundraiser name";
             _fundraiserRepository.Update(origFundraiser);
             var updatedCampaign = _fundraiserRepository.FindById(origFundraiser.Id);

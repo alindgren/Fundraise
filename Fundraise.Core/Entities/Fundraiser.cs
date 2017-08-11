@@ -21,6 +21,9 @@ namespace Fundraise.Core.Entities
         public FundraiserType FundraiserType { get; set; }
 
         [Required]
+        public string CreatorUserId { get; set; }
+
+        [Required]
         [MaxLength(50)]
         public string Name { get; set; }
 

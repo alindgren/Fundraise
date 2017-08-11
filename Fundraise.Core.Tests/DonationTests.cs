@@ -32,7 +32,7 @@ namespace Fundraise.Core.Tests
             _testCampaign = campaignRepository.Create("test", "USD", null, null);
 
             var fundraiserRepository = new FundraiserRepository(context);
-            _testFundraiser = fundraiserRepository.Create("test", _testCampaign.Id, FundraiserType.Individual);
+            _testFundraiser = fundraiserRepository.Create("test", _testCampaign.Id, FundraiserType.Individual, "test");
         }
 
         [TestMethod]

@@ -100,8 +100,15 @@ namespace Fundraise.MvcExample.Controllers
         [HttpPost]
         public ActionResult Create(FundraiserFormViewModel model)
         {
-            var fundraiser = _fundraiserRepository.Create(model.Name, model.CampaignId, FundraiserType.Individual);
-            return RedirectToAction("Index", new { id = fundraiser.Id });
+            if (User.Identity.IsAuthenticated)
+            {
+                var fundraiser = _fundraiserRepository.Create(model.Name, model.CampaignId, FundraiserType.Individual, User.Identity.GetUserId());
+                return RedirectToAction("Index", new { id = fundraiser.Id });
+            }
+            else
+            {
+                return RedirectToAction("Create");
+            }
         }
     }
 }
