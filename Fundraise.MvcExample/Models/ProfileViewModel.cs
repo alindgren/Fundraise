@@ -24,5 +24,6 @@ namespace Fundraise.MvcExample.Models
         public string ReferenceNumber { get; set; }
         public DonationStatus Status { get; set; }
         public double Amount { get; set; }
+        public DateTime DateCreated { get; set; }
     }
 }

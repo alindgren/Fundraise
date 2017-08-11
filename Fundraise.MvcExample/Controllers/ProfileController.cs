@@ -36,6 +36,17 @@ namespace Fundraise.MvcExample.Controllers
             var model = new ProfileViewModel();
             var donations =_donationRepository.GetByDonor(userId).ToList();
             model.Donations = AutoMapper.Mapper.Map<List<Donation>, List<DonationViewModel>>(donations);
+
+            // a better way? this is not efficient
+            foreach (var donation in model.Donations)
+            {
+                var fundraiser = _fundraiserRepository.FindById(donation.FundraiserId);
+                if (fundraiser != null)
+                {
+                    donation.FundraiserName = fundraiser.Name;
+                }
+            }
+
             model.Fundraisers = new List<FundraiserViewModel>();
 
             return View(model);

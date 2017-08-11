@@ -8,12 +8,19 @@
     <h2>Donations</h2>
 </div>
 <div class="row">
-    <ul>
-        @foreach (var donation in Model.Donations)
-        {
-            <li>@donation.Amount</li>
-        }
-    </ul>
+    <div class="panel panel-default">
+        <table class="table">
+            <tr>
+                <th>Date</th>
+                <th>Fundraiser</th>
+                <th>Amount</th>
+            </tr>
+            @foreach (var donation in Model.Donations)
+            {
+                <tr><td>@donation.DateCreated.ToShortDateString()</td><td>@donation.FundraiserName</td><td>@donation.Amount</td></tr>
+            }
+        </table>
+    </div>
 
 </div>
 @section headSection {
