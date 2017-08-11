@@ -13,11 +13,17 @@
             <tr>
                 <th>Date</th>
                 <th>Fundraiser</th>
+                <th>Campaign</th>
                 <th>Amount</th>
             </tr>
             @foreach (var donation in Model.Donations)
             {
-                <tr><td>@donation.DateCreated.ToShortDateString()</td><td>@donation.FundraiserName</td><td>@donation.Amount</td></tr>
+                <tr>
+                    <td>@donation.DateCreated.ToShortDateString()</td>
+                    <td>@Html.ActionLink(donation.FundraiserName, "Index", "Fundraiser", new { id = donation.FundraiserId }, null)</td>
+                    <td>@donation.CampaignName</td>
+                    <td>@donation.Amount</td>
+                </tr>
             }
         </table>
     </div>

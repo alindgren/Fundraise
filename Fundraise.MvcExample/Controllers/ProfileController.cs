@@ -45,6 +45,11 @@ namespace Fundraise.MvcExample.Controllers
                 {
                     donation.FundraiserName = fundraiser.Name;
                 }
+                var campaign = _campaignRepository.FindById(donation.CampaignId);
+                if (campaign != null)
+                {
+                    donation.CampaignName = campaign.Name;
+                }
             }
 
             model.Fundraisers = new List<FundraiserViewModel>();
