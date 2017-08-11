@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Fundraise.MvcExample.Models;
+using Fundraise.Core.Entities;
 
 namespace Fundraise.MvcExample.Controllers
 {
@@ -30,8 +32,13 @@ namespace Fundraise.MvcExample.Controllers
             {
                 return Redirect("/");
             }
+            string userId = User.Identity.GetUserId();
+            var model = new ProfileViewModel();
+            var donations =_donationRepository.GetByDonor(userId).ToList();
+            model.Donations = AutoMapper.Mapper.Map<List<Donation>, List<DonationViewModel>>(donations);
+            model.Fundraisers = new List<FundraiserViewModel>();
 
-            return View();
+            return View(model);
             
         }
     }

@@ -17,6 +17,7 @@ namespace Fundraise.MvcExample
                 config.CreateMap<Campaign, CampaignFormViewModel>();
                 config.CreateMap<Fundraiser, FundraiserViewModel>();
                 config.CreateMap<Fundraiser, FundraiserFormViewModel>();
+                config.CreateMap<Donation, DonationViewModel>();
             });
         }
     }

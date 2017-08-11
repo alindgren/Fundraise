@@ -1,5 +1,5 @@
 ﻿@using Fundraise.MvcExample.Models
-
+@model ProfileViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -9,7 +9,10 @@
 </div>
 <div class="row">
     <ul>
-
+        @foreach (var donation in Model.Donations)
+        {
+            <li>@donation.Amount</li>
+        }
     </ul>
 
 </div>
