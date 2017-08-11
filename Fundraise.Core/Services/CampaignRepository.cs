@@ -17,7 +17,7 @@ namespace Fundraise.Core.Services
 
         public Campaign Create(string name, string defaultCurrencyCode, JObject extendedData, DateTime? endDate)
         {
-            var campaign = new Campaign { Name = name, DefaultCurrencyCode = defaultCurrencyCode };
+            var campaign = new Campaign { Name = name, DefaultCurrencyCode = defaultCurrencyCode, DateCreated = DateTime.Now, DateLastUpdated = DateTime.Now };
             if (extendedData != null)
             {
                 campaign.ExtendedData = extendedData;
@@ -55,6 +55,7 @@ namespace Fundraise.Core.Services
 
         public Campaign Update(Campaign campaign)
         {
+            campaign.DateLastUpdated = DateTime.Now;
             var updateCampaign = _context.Update(campaign);
             _context.SaveChanges();
             return updateCampaign.Entity;
@@ -68,6 +69,7 @@ namespace Fundraise.Core.Services
                 throw new Exception("Campaign not found");
 
             campaign.IsActive = false;
+            campaign.DateLastUpdated = DateTime.Now;
             _context.Update(campaign);
             _context.SaveChanges();
         }

@@ -49,5 +49,11 @@ namespace Fundraise.Core.Entities
                 }
             }
         }
+
+        [Required]
+        public DateTime DateCreated { get; set; }
+
+        [Required]
+        public DateTime DateLastUpdated { get; set; }
     }
 }

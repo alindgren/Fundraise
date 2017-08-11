@@ -17,7 +17,7 @@ namespace Fundraise.Core.Services
 
         public Fundraiser Create(string name, Guid campaignId, FundraiserType type, JObject extendedData = null)
         {
-            var fundraiser = new Fundraiser { Name = name, CampaignId = campaignId, FundraiserType = type };
+            var fundraiser = new Fundraiser { Name = name, CampaignId = campaignId, FundraiserType = type, DateCreated = DateTime.Now, DateLastUpdated = DateTime.Now };
             if (extendedData != null)
             {
                 fundraiser.ExtendedData = extendedData;
@@ -53,6 +53,7 @@ namespace Fundraise.Core.Services
 
         public Fundraiser Update(Fundraiser fundraiser)
         {
+            fundraiser.DateLastUpdated = DateTime.Now;
             var updatedFundraiser = _context.Update(fundraiser);
             _context.SaveChanges();
             return updatedFundraiser.Entity;
@@ -65,6 +66,7 @@ namespace Fundraise.Core.Services
             if (fundraiser == null)
                 throw new Exception("Fundraiser not found");
 
+            fundraiser.DateLastUpdated = DateTime.Now;
             fundraiser.IsActive = false;
             _context.Update(fundraiser);
             _context.SaveChanges();

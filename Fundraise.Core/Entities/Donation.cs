@@ -47,5 +47,11 @@ namespace Fundraise.Core.Entities
         /// </summary>
         [Required]
         public double AmountInDefaultCurrency { get; set; }
+
+        [Required]
+        public DateTime DateCreated { get; set; }
+
+        [Required]
+        public DateTime DateLastUpdated { get; set; }
     }
 }

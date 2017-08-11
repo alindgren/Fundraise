@@ -32,7 +32,9 @@ namespace Fundraise.Core.Services
                 AmountInDefaultCurrency = amountInDefaultCurrency,
                 DonorUserId = donorUserId,
                 DonorDisplayName = donorDisplayName,
-                ReferenceNumber = referenceNumber
+                ReferenceNumber = referenceNumber, 
+                DateCreated = DateTime.Now,
+                DateLastUpdated = DateTime.Now
             };
 
             if (currencyCode == campaign.DefaultCurrencyCode && amount != amountInDefaultCurrency)
