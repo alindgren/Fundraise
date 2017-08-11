@@ -442,6 +442,7 @@
     <Content Include="Views\Fundraiser\Donate.cshtml" />
     <Content Include="Views\Fundraiser\Thanks.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\Fundraiser\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

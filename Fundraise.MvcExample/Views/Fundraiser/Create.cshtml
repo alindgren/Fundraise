@@ -1,0 +1,34 @@
+﻿@using Fundraise.MvcExample.Models
+@model FundraiserFormViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="page-header">
+    <h1>Create Fundraiser</h1>
+</div>
+<div class="row">
+    <form id="campaignForm" novalidate action="@Url.Action("Create", "Fundraiser")" method="post">
+        <div class="col-lg-10">
+            <div class="form-group">
+                @{
+                    SelectList list = ViewBag.CampaignDropDown;
+                }
+                Campaign:
+                @Html.DropDownList("CampaignId", list, "-- SELECT ONE --")<br />
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.Name)
+                @Html.EditorFor(p => p.Name)
+                @Html.ValidationMessageFor(p => p.Name, "*")
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.Description)
+                @Html.EditorFor(p => p.Description)
+            </div>
+            <div class="form-group pull-right">
+                <input type="hidden" name="IsActive" value="true" />
+                <input type="submit" class="btn btn-success" value="Save" />
+            </div>
+        </div>
+    </form>
+</div>

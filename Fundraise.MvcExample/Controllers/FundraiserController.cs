@@ -89,5 +89,19 @@ namespace Fundraise.MvcExample.Controllers
             var fundraiserViewModel = AutoMapper.Mapper.Map<Fundraiser, FundraiserFormViewModel>(fundraiser);
             return View("Thanks", fundraiserViewModel);
         }
+
+        [HttpGet]
+        public ActionResult Create()
+        {
+            ViewBag.CampaignDropDown = new SelectList(_campaignRepository.GetAll(), "Id", "Name");
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create(FundraiserFormViewModel model)
+        {
+            var fundraiser = _fundraiserRepository.Create(model.Name, model.CampaignId, FundraiserType.Individual);
+            return RedirectToAction("Index", new { id = fundraiser.Id });
+        }
     }
 }
