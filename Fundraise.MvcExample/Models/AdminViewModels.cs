@@ -27,5 +27,7 @@ namespace Fundraise.MvcExample.Models
 
         [MaxLength(50)]
         public string Name { get; set; }
+
+        public List<DonationViewModel> Donations { get; set; }
     }
 }

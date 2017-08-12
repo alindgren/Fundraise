@@ -1,9 +1,16 @@
 ﻿@using Fundraise.MvcExample.Models
-@model FundraiserFormViewModel
+@model FundraiserViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="page-header">
     <h1>@Model.Name</h1>
+    <h2>Donations</h2>
+    <ul>
+        @foreach (var donation in Model.Donations)
+        {
+            <li>@donation.DonorDisplayName - $@donation.Amount</li>
+        }
+    </ul>
     @Html.ActionLink("Donate", "Donate", new { id = Model.Id }, new { @class = "btn btn-default" })
 </div>

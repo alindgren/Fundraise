@@ -43,12 +43,13 @@ namespace Fundraise.MvcExample.Controllers
 
                 return View(model);
             }
-
             var fundraiser = _fundraiserRepository.FindById(id.Value);
             if (fundraiser == null)
                 return HttpNotFound();
 
-            var fundraiserViewModel = AutoMapper.Mapper.Map<Fundraiser, FundraiserFormViewModel>(fundraiser);
+            var fundraiserViewModel = AutoMapper.Mapper.Map<Fundraiser, FundraiserViewModel>(fundraiser);
+            var donations = _donationRepository.GetByFundraiser(fundraiser.Id).ToList();
+            fundraiserViewModel.Donations = AutoMapper.Mapper.Map<List<Donation>, List<DonationViewModel>>(donations);
 
             return View("Detail", fundraiserViewModel);
         }
