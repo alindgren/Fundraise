@@ -14,5 +14,7 @@ namespace Fundraise.MvcExample.Models
         /// Donation amount in dollars
         /// </summary>
         public int DonationAmount { get; set; }
+
+        public string DonorDisplayName { get; set; }
     }
 }

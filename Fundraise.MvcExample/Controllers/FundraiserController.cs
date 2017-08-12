@@ -84,7 +84,7 @@ namespace Fundraise.MvcExample.Controllers
                 {
                     userid = User.Identity.GetUserId();
                 }
-                _donationRepository.Create(campaign, fundraiser, DonationStatus.Completed, model.DonationAmount, "usd", model.DonationAmount, userid, "Alex L.", charge.Id);
+                _donationRepository.Create(campaign, fundraiser, DonationStatus.Completed, model.DonationAmount, "usd", model.DonationAmount, userid, model.DonorDisplayName, charge.Id);
             }
 
             var fundraiserViewModel = AutoMapper.Mapper.Map<Fundraiser, FundraiserFormViewModel>(fundraiser);
