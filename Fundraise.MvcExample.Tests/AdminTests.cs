@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Firefox;
 using Fundraise.MvcExample.Tests.Config;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace Fundraise.MvcExample.Tests
 {
@@ -27,6 +28,8 @@ namespace Fundraise.MvcExample.Tests
         {
             Browser.Quit();
             WebServer.Stop();
+
+            // todo: reset LocalDB
         }
 
         [TestMethod]
@@ -46,6 +49,16 @@ namespace Fundraise.MvcExample.Tests
 
             var submitButton = Browser.FindElementById("RegisterSubmit");
             submitButton.Submit();
+
+            try
+            {
+                var wait = new WebDriverWait(Browser, TimeSpan.FromSeconds(10));
+                var element = wait.Until(driver => driver.FindElement(By.Id("manage")));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception while waiting for 'manage': " + ex.Message);
+            }
 
             Assert.IsTrue(Browser.Url == "http://localhost:12365/", "The browser should redirect to 'http://localhost:12365/'");
             Assert.IsTrue(Browser.PageSource.Contains(""), "After registering, browser should display 'Hello test@alexlindgren.com!'");

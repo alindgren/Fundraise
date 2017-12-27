@@ -14,6 +14,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Configuration;
 
 [assembly: OwinStartupAttribute(typeof(Fundraise.MvcExample.Startup))]
 namespace Fundraise.MvcExample
@@ -28,13 +29,29 @@ namespace Fundraise.MvcExample
             container.Options.DefaultScopedLifestyle = new WebRequestLifestyle();
 
             // 2. Configure the container (register)
-            // See below for more configuration examples
-            container.Register<FundraiseContext>(() =>
-            {
-                var optionsBuilder = new DbContextOptionsBuilder<FundraiseContext>();
-                optionsBuilder.UseSqlServer(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-                return new FundraiseContext(optionsBuilder.Options);
-            }, Lifestyle.Scoped);
+            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"] == null 
+                ? null 
+                : ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+            //if (string.IsNullOrEmpty(connectionString)) // UseInMemoryDatabase if connection string is null or empty
+            //{
+            //    container.Register<FundraiseContext>(() =>
+            //    {
+            //        var optionsBuilder = new DbContextOptionsBuilder<FundraiseContext>();
+            //        optionsBuilder.UseInMemoryDatabase();
+            //        return new FundraiseContext(optionsBuilder.Options);
+            //    }, Lifestyle.Scoped);
+            //}
+            //else
+            //{
+                container.Register<FundraiseContext>(() =>
+                {
+                    var optionsBuilder = new DbContextOptionsBuilder<FundraiseContext>();
+                    optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                    return new FundraiseContext(optionsBuilder.Options);
+                }, Lifestyle.Scoped);
+            //}
+
             container.Register<ICampaignRepository, CampaignRepository>(Lifestyle.Scoped);
             container.Register<IDonationRepository, DonationRepository>(Lifestyle.Scoped);
 
@@ -61,7 +78,7 @@ namespace Fundraise.MvcExample
             ConfigureAuth(app);
             container.Register<IAuthenticationManager>(() => HttpContext.Current.GetOwinContext().Authentication);
 
-            Stripe.StripeConfiguration.SetApiKey(System.Configuration.ConfigurationManager.AppSettings["StripeSecretKey"]);
+            Stripe.StripeConfiguration.SetApiKey(ConfigurationManager.AppSettings["StripeSecretKey"]);
         }
     }
 }
