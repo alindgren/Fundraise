@@ -58,6 +58,8 @@ namespace Fundraise.MvcExample.Tests
             catch (Exception ex)
             {
                 Console.WriteLine("Exception while waiting for 'manage': " + ex.Message);
+                var screenshot = Browser.GetScreenshot();
+                screenshot.SaveAsFile("error.png");
             }
 
             Assert.IsTrue(Browser.Url == "http://localhost:12365/", "The browser should redirect to 'http://localhost:12365/'");
