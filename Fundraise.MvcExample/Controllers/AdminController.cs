@@ -60,7 +60,7 @@ namespace Fundraise.MvcExample.Controllers
 
                 return RedirectToAction("CampaignDetail", new { id = campaign.Id });
             }
-            catch (Exception ex)
+            catch
             {
                 return View();
             }
@@ -108,7 +108,7 @@ namespace Fundraise.MvcExample.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch (Exception ex)
+            catch
             {
                 return View();
             }

@@ -29,28 +29,12 @@ namespace Fundraise.MvcExample
             container.Options.DefaultScopedLifestyle = new WebRequestLifestyle();
 
             // 2. Configure the container (register)
-            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"] == null 
-                ? null 
-                : ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-
-            //if (string.IsNullOrEmpty(connectionString)) // UseInMemoryDatabase if connection string is null or empty
-            //{
-            //    container.Register<FundraiseContext>(() =>
-            //    {
-            //        var optionsBuilder = new DbContextOptionsBuilder<FundraiseContext>();
-            //        optionsBuilder.UseInMemoryDatabase();
-            //        return new FundraiseContext(optionsBuilder.Options);
-            //    }, Lifestyle.Scoped);
-            //}
-            //else
-            //{
-                container.Register<FundraiseContext>(() =>
-                {
-                    var optionsBuilder = new DbContextOptionsBuilder<FundraiseContext>();
-                    optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-                    return new FundraiseContext(optionsBuilder.Options);
-                }, Lifestyle.Scoped);
-            //}
+            container.Register<FundraiseContext>(() =>
+            {
+                var optionsBuilder = new DbContextOptionsBuilder<FundraiseContext>();
+                optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                return new FundraiseContext(optionsBuilder.Options);
+            }, Lifestyle.Scoped);
 
             container.Register<ICampaignRepository, CampaignRepository>(Lifestyle.Scoped);
             container.Register<IDonationRepository, DonationRepository>(Lifestyle.Scoped);
