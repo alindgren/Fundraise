@@ -62,8 +62,9 @@ namespace Fundraise.MvcExample.Tests
                 screenshot.SaveAsFile("error.png");
             }
 
+            Assert.IsFalse(Browser.PageSource.Contains("An unhandled exception occurred during the execution of the current web request."), Browser.Title);
             Assert.IsTrue(Browser.Url == "http://localhost:12365/", "The browser should redirect to 'http://localhost:12365/'");
-            Assert.IsTrue(Browser.PageSource.Contains(""), "After registering, browser should display 'Hello test@alexlindgren.com!'");
+            Assert.IsTrue(Browser.PageSource.Contains("test@alexlindgren.com"), "After registering, browser should display 'Hello test@alexlindgren.com!'");
         }
     }
 }
