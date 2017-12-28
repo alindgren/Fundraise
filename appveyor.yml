@@ -1,0 +1,13 @@
+version: 1.0.{build}
+image: Visual Studio 2017
+environment:
+  EnableNuGetPackageRestore: true
+before_build:
+- cmd: nuget restore  	Fundraise.sln
+build:
+  verbosity: minimal
+on_failure:
+- cmd: appveyor PushArtifact Fundraise.MvcExample.Tests\bin\Debug\error.png
+artifacts:
+- path: Fundraise.MvcExample.Tests\bin\Debug\error.png
+  name: error.png
