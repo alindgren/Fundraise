@@ -60,6 +60,7 @@ namespace Fundraise.MvcExample.Tests
                 Console.WriteLine("Exception while waiting for 'manage': " + ex.Message);
                 var screenshot = Browser.GetScreenshot();
                 screenshot.SaveAsFile("error.png");
+                Console.WriteLine(Browser.PageSource);
             }
 
             Assert.IsFalse(Browser.PageSource.Contains("An unhandled exception occurred during the execution of the current web request."), Browser.Title);
