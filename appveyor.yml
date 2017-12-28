@@ -7,8 +7,25 @@ before_build:
 - cmd: nuget restore  	Fundraise.sln
 build:
   verbosity: minimal
-on_failure:
-- cmd: appveyor PushArtifact Fundraise.MvcExample.Tests\bin\Debug\error.png
+before_test:
+- ps: >-
+    $startPath = "$($env:appveyor_build_folder)\Fundraise.MvcExample"
+
+    $sqlInstance = "(local)\SQL2016"
+
+    $dbName = "Fundraise"
+
+    $config = join-path $startPath "Web.config"
+
+    $doc = (gc $config) -as [xml]
+
+    $doc.SelectSingleNode('//connectionStrings/add[@name="DefaultConnection"]').connectionString = "Server=$sqlInstance; Database=$dbName; Trusted_connection=true"
+
+    $doc.Save($config)
+
+    sqlcmd -S "$sqlInstance" -Q "Use [master]; CREATE DATABASE [$dbName]"
 artifacts:
 - path: Fundraise.MvcExample.Tests\bin\Debug\error.png
   name: error.png
+on_failure:
+- cmd: appveyor PushArtifact Fundraise.MvcExample.Tests\bin\Debug\error.png
