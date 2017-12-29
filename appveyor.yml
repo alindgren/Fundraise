@@ -25,7 +25,7 @@ before_test:
 
     sqlcmd -S "$sqlInstance" -Q "Use [master]; CREATE DATABASE [$dbName]"
 artifacts:
-- path: Fundraise.MvcExample.Tests\bin\Debug\error.png
-  name: error.png
+- path: Fundraise.MvcExample.Tests\bin\Debug\*.png
+  name: '*.png'
 on_failure:
-- cmd: appveyor PushArtifact Fundraise.MvcExample.Tests\bin\Debug\error.png
+- cmd: appveyor PushArtifact Fundraise.MvcExample.Tests\bin\Debug\*.png
