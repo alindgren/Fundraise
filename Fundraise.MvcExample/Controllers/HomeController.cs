@@ -26,7 +26,7 @@ namespace Fundraise.MvcExample.Controllers
 
 
             //var x = _campaignRepository.FindByName("test");
-            var z = _fundraiserRepository.GetAll();
+            //var z = _fundraiserRepository.GetAll();
 
             return View();
         }
