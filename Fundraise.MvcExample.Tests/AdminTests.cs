@@ -116,7 +116,10 @@ namespace Fundraise.MvcExample.Tests
             //Console.WriteLine("save button value: " + saveButton.GetAttribute("value").ToString());
             saveButton.Submit();
 
-            var wait = new WebDriverWait(Browser, TimeSpan.FromSeconds(10));
+            var screenshot2 = Browser.GetScreenshot();
+            screenshot2.SaveAsFile("create-campaign-response.png");
+
+            var wait = new WebDriverWait(Browser, TimeSpan.FromSeconds(30));
             var element = wait.Until(ExpectedConditions.UrlContains("/Admin/CampaignDetail/"));
 
             Console.WriteLine("Browser.Url: " + Browser.Url);
