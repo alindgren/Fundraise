@@ -38,7 +38,7 @@ namespace Fundraise.MvcExample.Tests
             Browser.Manage().Window.Maximize();
             Browser.Navigate().GoToUrl("http://localhost:12365/Account/Register");
 
-            string email = "test17@alexlindgren.com";
+            string email = "test19@alexlindgren.com";
             var emailBox = Browser.FindElementById("Email");
             emailBox.SendKeys(email);
 
@@ -73,9 +73,6 @@ namespace Fundraise.MvcExample.Tests
 
             Browser.Navigate().GoToUrl("http://localhost:12365/Admin/CampaignCreate");
 
-            var screenshot1 = Browser.GetScreenshot();
-            screenshot1.SaveAsFile("create-campaign.png");
-
             var nameBox = Browser.FindElementById("Name");
             nameBox.SendKeys("Test Campaign");
 
@@ -84,7 +81,7 @@ namespace Fundraise.MvcExample.Tests
 
             var saveButton = Browser.FindElementById("campaign-create");
             Console.WriteLine("save button value: " + saveButton.GetAttribute("value").ToString());
-            saveButton.Submit();
+            saveButton.Click();
 
             try
             {
