@@ -12,7 +12,7 @@ namespace Fundraise.MvcExample.Tests
     {
         public static IisExpressWebServer WebServer;
         public static FirefoxDriver Browser;
-        public const string email = "test25@alexlindgren.com";
+        public const string email = "test26@alexlindgren.com";
 
         [ClassInitialize]
         public static void Init(TestContext context)
@@ -101,61 +101,48 @@ namespace Fundraise.MvcExample.Tests
             Assert.IsTrue(Browser.PageSource.Contains(email), "After logging in, the browser should display 'Hello " + email + "!'");
         }
 
-        //[TestMethod]
-        //public void CreateNewAccount()
-        //{
-        //    Browser.Manage().Window.Maximize();
-        //    Browser.Navigate().GoToUrl("http://localhost:59702/Account/Login");
+        [TestMethod]
+        public void CreateNewCampaign()
+        {
+            Browser.Navigate().GoToUrl("http://localhost:12365/Admin/CampaignCreate");
 
-        //    string email = "test21@alexlindgren.com";
-        //    var emailBox = Browser.FindElementById("Email");
-        //    emailBox.SendKeys(email);
+            var nameBox = Browser.FindElementById("Name");
+            nameBox.SendKeys("Test Campaign");
 
-        //    var passwordBox = Browser.FindElementById("Password");
-        //    passwordBox.SendKeys("test1234");
+            var descBox = Browser.FindElementById("Description");
+            descBox.SendKeys("This is a test.");
 
-        //    var submitButton = Browser.FindElementById("LoginSubmit");
-        //    submitButton.Submit();
+            var saveButton = Browser.FindElementById("campaign-create");
+            //Console.WriteLine("save button value: " + saveButton.GetAttribute("value").ToString());
+            saveButton.Submit();
 
+            var wait = new WebDriverWait(Browser, TimeSpan.FromSeconds(10));
+            var element = wait.Until(ExpectedConditions.UrlContains("/Admin/CampaignDetail/"));
 
-        //    Assert.IsFalse(Browser.PageSource.Contains("An unhandled exception occurred during the execution of the current web request."), Browser.Title);
-        //    Assert.IsTrue(Browser.Url == "http://localhost:12365/", "The browser should redirect to 'http://localhost:12365/'");
-        //    Assert.IsTrue(Browser.PageSource.Contains(email), "After logging in, the browser should display 'Hello "+ email + "!'");
+            Console.WriteLine("Browser.Url: " + Browser.Url);
 
-        //    Browser.Navigate().GoToUrl("http://localhost:12365/Admin/CampaignCreate");
-
-        //    var nameBox = Browser.FindElementById("Name");
-        //    nameBox.SendKeys("Test Campaign");
-
-        //    var descBox = Browser.FindElementById("Description");
-        //    descBox.SendKeys("This is a test.");
-
-        //    var saveButton = Browser.FindElementById("campaign-create");
-        //    Console.WriteLine("save button value: " + saveButton.GetAttribute("value").ToString());
-        //    saveButton.Submit();
-
-        //    //try
-        //    //{
-        //    //    var wait = new WebDriverWait(Browser, TimeSpan.FromSeconds(30));
-        //    //    var element = wait.Until(driver => driver.FindElement(By.LinkText("Edit")));
-        //    //}
-        //    //catch (Exception ex)
-        //    //{
-        //    //    Console.WriteLine("Exception while waiting for 'Edit' link: " + ex.Message);
-        //    //    Console.WriteLine("Final URL was " + Browser.Url);
-        //    var screenshot2 = Browser.GetScreenshot();
-        //    screenshot2.SaveAsFile("create-campaign-error.png");
-        //    //    if (Browser.PageSource.IndexOf("<code><pre>") > 0)
-        //    //    {
-        //    //        Console.WriteLine(Browser.PageSource.Substring(Browser.PageSource.IndexOf("<code><pre>")));
-        //    //    }
-        //    //    else
-        //    //    {
-        //    //        Console.WriteLine("Final page title was: " + Browser.Title);
-        //    //    }
-        //    //}
-        //    Assert.IsTrue(Browser.Url.Contains("/Admin/CampaignDetail/"), "The browser should redirect to 'http://localhost:12365/Admin/CampaignDetail/[GUID]'");
-        //}
+            //try
+            //{
+            //    var wait = new WebDriverWait(Browser, TimeSpan.FromSeconds(30));
+            //    var element = wait.Until(driver => driver.FindElement(By.LinkText("Edit")));
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine("Exception while waiting for 'Edit' link: " + ex.Message);
+            //    Console.WriteLine("Final URL was " + Browser.Url);
+            //var screenshot2 = Browser.GetScreenshot();
+            //screenshot2.SaveAsFile("create-campaign-error.png");
+            //    if (Browser.PageSource.IndexOf("<code><pre>") > 0)
+            //    {
+            //        Console.WriteLine(Browser.PageSource.Substring(Browser.PageSource.IndexOf("<code><pre>")));
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine("Final page title was: " + Browser.Title);
+            //    }
+            //}
+            Assert.IsTrue(Browser.Url.Contains("/Admin/CampaignDetail/"), "The browser should redirect to 'http://localhost:12365/Admin/CampaignDetail/[GUID]'");
+        }
 
         //[TestMethod]
         //public void CreateNewFundraiser()
