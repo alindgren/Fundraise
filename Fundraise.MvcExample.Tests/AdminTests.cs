@@ -38,7 +38,7 @@ namespace Fundraise.MvcExample.Tests
             Browser.Manage().Window.Maximize();
             Browser.Navigate().GoToUrl("http://localhost:12365/Account/Register");
 
-            string email = "test19@alexlindgren.com";
+            string email = "test20@alexlindgren.com";
             var emailBox = Browser.FindElementById("Email");
             emailBox.SendKeys(email);
 
@@ -81,11 +81,11 @@ namespace Fundraise.MvcExample.Tests
 
             var saveButton = Browser.FindElementById("campaign-create");
             Console.WriteLine("save button value: " + saveButton.GetAttribute("value").ToString());
-            saveButton.Click();
+            saveButton.Submit();
 
             try
             {
-                var wait = new WebDriverWait(Browser, TimeSpan.FromSeconds(15));
+                var wait = new WebDriverWait(Browser, TimeSpan.FromSeconds(30));
                 var element = wait.Until(driver => driver.FindElement(By.LinkText("Edit")));
             }
             catch (Exception ex)
