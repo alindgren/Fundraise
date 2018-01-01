@@ -82,7 +82,7 @@ namespace Fundraise.MvcExample.Tests
             var descBox = Browser.FindElementById("Description");
             descBox.SendKeys("This is a test.");
 
-            var saveButton = Browser.FindElementsByCssSelector("input.btn-success")[0];
+            var saveButton = Browser.FindElementById("campaign-create");
             saveButton.Submit();
 
             try
