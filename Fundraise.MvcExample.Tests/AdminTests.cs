@@ -93,11 +93,16 @@ namespace Fundraise.MvcExample.Tests
             catch (Exception ex)
             {
                 Console.WriteLine("Exception while waiting for 'Edit' link: " + ex.Message);
+                Console.WriteLine("Final URL was " + Browser.Url);
                 var screenshot = Browser.GetScreenshot();
                 screenshot.SaveAsFile("create-campaign-error.png");
                 if (Browser.PageSource.IndexOf("<code><pre>") > 0)
                 {
                     Console.WriteLine(Browser.PageSource.Substring(Browser.PageSource.IndexOf("<code><pre>")));
+                }
+                else
+                {
+                    Console.WriteLine("Final page title was: " + Browser.Title);
                 }
             }
             Assert.IsTrue(Browser.Url.Contains("/Admin/CampaignDetail/"), "The browser should redirect to 'http://localhost:12365/Admin/CampaignDetail/[GUID]'");
