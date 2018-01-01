@@ -70,36 +70,36 @@ namespace Fundraise.MvcExample.Tests
             Assert.IsTrue(Browser.Url == "http://localhost:12365/", "The browser should redirect to 'http://localhost:12365/'");
             Assert.IsTrue(Browser.PageSource.Contains("test@alexlindgren.com"), "After registering, browser should display 'Hello test@alexlindgren.com!'");
      
-            Browser.Navigate().GoToUrl("http://localhost:59702/Admin/CampaignCreate");
+            //Browser.Navigate().GoToUrl("http://localhost:59702/Admin/CampaignCreate");
 
-            var screenshot1 = Browser.GetScreenshot();
-            screenshot1.SaveAsFile("create-campaign.png");
+            //var screenshot1 = Browser.GetScreenshot();
+            //screenshot1.SaveAsFile("create-campaign.png");
 
-            var nameBox = Browser.FindElementById("Name");
-            nameBox.SendKeys("Test Campaign");
+            //var nameBox = Browser.FindElementById("Name");
+            //nameBox.SendKeys("Test Campaign");
 
-            var descBox = Browser.FindElementById("Description");
-            descBox.SendKeys("This is a test.");
+            //var descBox = Browser.FindElementById("Description");
+            //descBox.SendKeys("This is a test.");
 
-            var saveButton = Browser.FindElementsByCssSelector("input.btn-success")[0];
-            saveButton.Submit();
+            //var saveButton = Browser.FindElementsByCssSelector("input.btn-success")[0];
+            //saveButton.Submit();
 
-            try
-            {
-                var wait = new WebDriverWait(Browser, TimeSpan.FromSeconds(10));
-                var element = wait.Until(driver => driver.FindElement(By.LinkText("Edit")));
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Exception while waiting for 'Edit' link: " + ex.Message);
-                var screenshot = Browser.GetScreenshot();
-                screenshot.SaveAsFile("create-campaign-error.png");
-                if (Browser.PageSource.IndexOf("<code><pre>") > 0)
-                {
-                    Console.WriteLine(Browser.PageSource.Substring(Browser.PageSource.IndexOf("<code><pre>")));
-                }
-            }
-            Assert.IsTrue(Browser.Url.Contains("/Admin/CampaignDetail/"), "The browser should redirect to 'http://localhost:59702/Admin/CampaignDetail/[GUID]'");
+            //try
+            //{
+            //    var wait = new WebDriverWait(Browser, TimeSpan.FromSeconds(10));
+            //    var element = wait.Until(driver => driver.FindElement(By.LinkText("Edit")));
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine("Exception while waiting for 'Edit' link: " + ex.Message);
+            //    var screenshot = Browser.GetScreenshot();
+            //    screenshot.SaveAsFile("create-campaign-error.png");
+            //    if (Browser.PageSource.IndexOf("<code><pre>") > 0)
+            //    {
+            //        Console.WriteLine(Browser.PageSource.Substring(Browser.PageSource.IndexOf("<code><pre>")));
+            //    }
+            //}
+            //Assert.IsTrue(Browser.Url.Contains("/Admin/CampaignDetail/"), "The browser should redirect to 'http://localhost:59702/Admin/CampaignDetail/[GUID]'");
         }
 
         //[TestMethod]
