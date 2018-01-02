@@ -101,51 +101,31 @@ namespace Fundraise.MvcExample.Tests
             Assert.IsTrue(Browser.PageSource.Contains(email), "After logging in, the browser should display 'Hello " + email + "!'");
         }
 
-        [TestMethod]
-        public void CreateNewCampaign()
-        {
-            Browser.Navigate().GoToUrl("http://localhost:12365/Admin/CampaignCreate");
+        //[TestMethod]
+        //public void CreateNewCampaign()
+        //{
+        //    Browser.Navigate().GoToUrl("http://localhost:12365/Admin/CampaignCreate");
 
-            var nameBox = Browser.FindElementById("Name");
-            nameBox.SendKeys("Test Campaign");
+        //    var nameBox = Browser.FindElementById("Name");
+        //    nameBox.SendKeys("Test Campaign");
 
-            var descBox = Browser.FindElementById("Description");
-            descBox.SendKeys("This is a test.");
+        //    var descBox = Browser.FindElementById("Description");
+        //    descBox.SendKeys("This is a test.");
 
-            var saveButton = Browser.FindElementById("campaign-create");
-            //Console.WriteLine("save button value: " + saveButton.GetAttribute("value").ToString());
-            saveButton.Submit();
+        //    var saveButton = Browser.FindElementById("campaign-create");
+        //    //Console.WriteLine("save button value: " + saveButton.GetAttribute("value").ToString());
+        //    saveButton.Submit();
 
-            var screenshot2 = Browser.GetScreenshot();
-            screenshot2.SaveAsFile("create-campaign-response.png");
+        //    var screenshot2 = Browser.GetScreenshot();
+        //    screenshot2.SaveAsFile("create-campaign-response.png");
 
-            var wait = new WebDriverWait(Browser, TimeSpan.FromSeconds(30));
-            var element = wait.Until(ExpectedConditions.UrlContains("/Admin/CampaignDetail/"));
+        //    var wait = new WebDriverWait(Browser, TimeSpan.FromSeconds(30));
+        //    var element = wait.Until(ExpectedConditions.UrlContains("/Admin/CampaignDetail/"));
 
-            Console.WriteLine("Browser.Url: " + Browser.Url);
+        //    Console.WriteLine("Browser.Url: " + Browser.Url);
 
-            //try
-            //{
-            //    var wait = new WebDriverWait(Browser, TimeSpan.FromSeconds(30));
-            //    var element = wait.Until(driver => driver.FindElement(By.LinkText("Edit")));
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine("Exception while waiting for 'Edit' link: " + ex.Message);
-            //    Console.WriteLine("Final URL was " + Browser.Url);
-            //var screenshot2 = Browser.GetScreenshot();
-            //screenshot2.SaveAsFile("create-campaign-error.png");
-            //    if (Browser.PageSource.IndexOf("<code><pre>") > 0)
-            //    {
-            //        Console.WriteLine(Browser.PageSource.Substring(Browser.PageSource.IndexOf("<code><pre>")));
-            //    }
-            //    else
-            //    {
-            //        Console.WriteLine("Final page title was: " + Browser.Title);
-            //    }
-            //}
-            Assert.IsTrue(Browser.Url.Contains("/Admin/CampaignDetail/"), "The browser should redirect to 'http://localhost:12365/Admin/CampaignDetail/[GUID]'");
-        }
+        //    Assert.IsTrue(Browser.Url.Contains("/Admin/CampaignDetail/"), "The browser should redirect to 'http://localhost:12365/Admin/CampaignDetail/[GUID]'");
+        //}
 
         //[TestMethod]
         //public void CreateNewFundraiser()
