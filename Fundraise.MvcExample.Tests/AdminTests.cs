@@ -12,9 +12,10 @@ namespace Fundraise.MvcExample.Tests
     {
         public static IisExpressWebServer WebServer;
         public static FirefoxDriver Browser;
-        public const string email = "test26@alexlindgren.com";
+        public const string email = "test28@alexlindgren.com";
 
         [ClassInitialize]
+        [TestProperty("TestKind", "Browser")]
         public static void Init(TestContext context)
         {
             var app = new WebApplication(ProjectLocation.FromFolder("Fundraise.MvcExample"), 12365);
