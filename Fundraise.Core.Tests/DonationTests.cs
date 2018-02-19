@@ -23,7 +23,7 @@ namespace Fundraise.Core.Tests
         private void Init()
         {
             var builder = new DbContextOptionsBuilder<FundraiseContext>()
-            .UseInMemoryDatabase();
+            .UseInMemoryDatabase("FundraiseTestDB");
 
             var context = new FundraiseContext(builder.Options);
             _donationRepository = new DonationRepository(context);
