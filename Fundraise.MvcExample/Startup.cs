@@ -15,6 +15,10 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using System.Configuration;
+using MediatR;
+using System.Collections.Generic;
+using Fundraise.MvcExample.Requests;
+using System.Linq;
 
 [assembly: OwinStartupAttribute(typeof(Fundraise.MvcExample.Startup))]
 namespace Fundraise.MvcExample
@@ -38,6 +42,13 @@ namespace Fundraise.MvcExample
 
             container.Register<ICampaignRepository, CampaignRepository>(Lifestyle.Scoped);
             container.Register<IDonationRepository, DonationRepository>(Lifestyle.Scoped);
+            container.RegisterSingleton<IMediator, Mediator>();
+            var assemblies = GetAssemblies().ToArray();
+            container.Register(typeof(IRequestHandler<,>), assemblies);
+            container.Register(typeof(IRequestHandler<>), assemblies);
+
+            container.RegisterSingleton(new SingleInstanceFactory(container.GetInstance));
+            container.RegisterSingleton(new MultiInstanceFactory(container.GetAllInstances));
 
             var identityDbContext = Models.ApplicationDbContext.Create();
             container.Register<IUserStore<Models.ApplicationUser>>(() => new Microsoft.AspNet.Identity.EntityFramework.UserStore<Models.ApplicationUser>(identityDbContext));
@@ -63,6 +74,12 @@ namespace Fundraise.MvcExample
             container.Register<IAuthenticationManager>(() => HttpContext.Current.GetOwinContext().Authentication);
 
             Stripe.StripeConfiguration.SetApiKey(ConfigurationManager.AppSettings["StripeSecretKey"]);
+        }
+
+        private static IEnumerable<Assembly> GetAssemblies()
+        {
+            yield return typeof(IMediator).GetTypeInfo().Assembly;
+            yield return typeof(Donate).GetTypeInfo().Assembly;
         }
     }
 }
