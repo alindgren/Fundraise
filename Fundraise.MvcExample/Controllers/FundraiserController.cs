@@ -8,7 +8,9 @@ using System.Web;
 using System.Web.Mvc;
 using Stripe;
 using Microsoft.AspNet.Identity;
-
+using MediatR;
+using Fundraise.MvcExample.Requests;
+using System.Threading.Tasks;
 
 namespace Fundraise.MvcExample.Controllers
 {
@@ -18,9 +20,11 @@ namespace Fundraise.MvcExample.Controllers
         private ICampaignRepository _campaignRepository;
         private IFundraiserRepository _fundraiserRepository;
         private IDonationRepository _donationRepository;
+        private readonly IMediator _mediator;
 
-        public FundraiserController(CampaignRepository campaignRepository, FundraiserRepository fundraiserRepository, IDonationRepository donationRepository)
+        public FundraiserController(IMediator mediator, CampaignRepository campaignRepository, FundraiserRepository fundraiserRepository, IDonationRepository donationRepository)
         {
+            _mediator = mediator;
             _campaignRepository = campaignRepository;
             _fundraiserRepository = fundraiserRepository;
             _donationRepository = donationRepository;
@@ -66,28 +70,21 @@ namespace Fundraise.MvcExample.Controllers
         [HttpPost]
         public ActionResult Donate(DonateFormViewModel model)
         {
-            var fundraiser = _fundraiserRepository.FindById(model.FundraiserId);
-            var campaign = _campaignRepository.FindById(fundraiser.CampaignId);
-
-            if (model.DonationAmount > 0)
+            Donate request = new Donate()
             {
-                var chargeService = new StripeChargeService();
-                var charge = chargeService.Create(new StripeChargeCreateOptions()
-                {
-                    Amount = model.DonationAmount * 100,
-                    Currency = "usd",
-                    Description = fundraiser.Name,
-                    SourceTokenOrExistingSourceId = model.StripeToken
-                });
-                string userid = null;
-                if (User.Identity.IsAuthenticated)
-                {
-                    userid = User.Identity.GetUserId();
-                }
-                _donationRepository.Create(campaign, fundraiser, DonationStatus.Completed, model.DonationAmount, "usd", model.DonationAmount, userid, model.DonorDisplayName, charge.Id);
-            }
+                DonationAmount = model.DonationAmount,
+                FundraiserId = model.FundraiserId,
+                DonorDisplayName = model.DonorDisplayName,
+                StripeToken = model.StripeToken
+            };
+            request.UserId = User.Identity.IsAuthenticated ? User.Identity.GetUserId() : string.Empty;
+            bool success = _mediator.Send<bool>(request).Result;
 
-            var fundraiserViewModel = AutoMapper.Mapper.Map<Fundraiser, FundraiserFormViewModel>(fundraiser);
+            var fundraiserViewModel = new FundraiserFormViewModel()
+            {
+                Name = "Need to get Fundraiser name?" // todo
+            };
+            // AutoMapper.Mapper.Map<Fundraiser, FundraiserFormViewModel>(fundraiser);
             return View("Thanks", fundraiserViewModel);
         }
 
