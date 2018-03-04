@@ -366,7 +366,10 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ProfileViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestHandlers\ConstrainedRequestPostProcessor.cs" />
     <Compile Include="RequestHandlers\DonateHandler.cs" />
+    <Compile Include="RequestHandlers\GenericRequestPostProcessor.cs" />
+    <Compile Include="RequestHandlers\GenericRequestPreProcessor.cs" />
     <Compile Include="Requests\Donate.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

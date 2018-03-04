@@ -19,6 +19,9 @@ using MediatR;
 using System.Collections.Generic;
 using Fundraise.MvcExample.Requests;
 using System.Linq;
+using MediatR.Pipeline;
+using Fundraise.MvcExample.RequestHandlers;
+using System.IO;
 
 [assembly: OwinStartupAttribute(typeof(Fundraise.MvcExample.Startup))]
 namespace Fundraise.MvcExample
@@ -40,12 +43,31 @@ namespace Fundraise.MvcExample
                 return new FundraiseContext(optionsBuilder.Options);
             }, Lifestyle.Scoped);
 
+            container.Register<IFundraiserRepository, FundraiserRepository>(Lifestyle.Scoped);
             container.Register<ICampaignRepository, CampaignRepository>(Lifestyle.Scoped);
             container.Register<IDonationRepository, DonationRepository>(Lifestyle.Scoped);
             container.RegisterSingleton<IMediator, Mediator>();
             var assemblies = GetAssemblies().ToArray();
             container.Register(typeof(IRequestHandler<,>), assemblies);
             container.Register(typeof(IRequestHandler<>), assemblies);
+
+            // we have to do this because by default, generic type definitions (such as the Constrained Notification Handler) won't be registered
+            var notificationHandlerTypes = container.GetTypesToRegister(typeof(INotificationHandler<>), assemblies, new TypesToRegisterOptions
+            {
+                IncludeGenericTypeDefinitions = true,
+                IncludeComposites = false,
+            });
+            container.RegisterCollection(typeof(INotificationHandler<>), notificationHandlerTypes);
+
+            container.RegisterSingleton<TextWriter>(System.Console.Out);
+
+            container.RegisterCollection(typeof(IPipelineBehavior<,>), new[]
+            {
+                typeof(RequestPreProcessorBehavior<,>),
+                typeof(RequestPostProcessorBehavior<,>)
+            });
+            container.RegisterCollection(typeof(IRequestPreProcessor<>), new[] { typeof(GenericRequestPreProcessor<>) });
+            container.RegisterCollection(typeof(IRequestPostProcessor<,>), new[] { typeof(GenericRequestPostProcessor<,>), typeof(ConstrainedRequestPostProcessor<,>) });
 
             container.RegisterSingleton(new SingleInstanceFactory(container.GetInstance));
             container.RegisterSingleton(new MultiInstanceFactory(container.GetAllInstances));
@@ -80,6 +102,7 @@ namespace Fundraise.MvcExample
         {
             yield return typeof(IMediator).GetTypeInfo().Assembly;
             yield return typeof(Donate).GetTypeInfo().Assembly;
+            yield return typeof(DonationRepository).GetTypeInfo().Assembly;
         }
     }
 }
