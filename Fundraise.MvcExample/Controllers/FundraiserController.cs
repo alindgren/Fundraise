@@ -68,9 +68,15 @@ namespace Fundraise.MvcExample.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> DonateAsync()
+        public async Task<ActionResult> DonateAsync(DonateFormViewModel model)
         {
-            Donate request = new Donate();
+            Donate request = new Donate()
+            {
+                DonationAmount = model.DonationAmount,
+                FundraiserId = model.FundraiserId,
+                DonorDisplayName = model.DonorDisplayName,
+                StripeToken = model.StripeToken
+            };
             request.UserId = User.Identity.IsAuthenticated ? User.Identity.GetUserId() : string.Empty;
             bool success = await _mediator.Send(request);
 
