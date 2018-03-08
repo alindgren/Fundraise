@@ -369,10 +369,14 @@
     <Compile Include="RequestHandlers\ConstrainedRequestPostProcessor.cs" />
     <Compile Include="RequestHandlers\CreateFundraiserHandler.cs" />
     <Compile Include="RequestHandlers\DonateHandler.cs" />
+    <Compile Include="RequestHandlers\FundraisersByCampaignIdHandler.cs" />
     <Compile Include="RequestHandlers\GenericRequestPostProcessor.cs" />
     <Compile Include="RequestHandlers\GenericRequestPreProcessor.cs" />
+    <Compile Include="RequestHandlers\GetFundraiserHandler.cs" />
     <Compile Include="Requests\CreateFundraiser.cs" />
     <Compile Include="Requests\Donate.cs" />
+    <Compile Include="Requests\FundraisersByCampaignId.cs" />
+    <Compile Include="Requests\FundraiserId.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

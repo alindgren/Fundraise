@@ -16,17 +16,14 @@ namespace Fundraise.MvcExample.Controllers
 {
     public class FundraiserController : Controller
     {
-
         private ICampaignRepository _campaignRepository;
-        private IFundraiserRepository _fundraiserRepository;
         private IDonationRepository _donationRepository;
         private readonly IMediator _mediator;
 
-        public FundraiserController(IMediator mediator, CampaignRepository campaignRepository, FundraiserRepository fundraiserRepository, IDonationRepository donationRepository)
+        public FundraiserController(IMediator mediator, CampaignRepository campaignRepository, IDonationRepository donationRepository)
         {
             _mediator = mediator;
             _campaignRepository = campaignRepository;
-            _fundraiserRepository = fundraiserRepository;
             _donationRepository = donationRepository;
         }
 
@@ -41,13 +38,19 @@ namespace Fundraise.MvcExample.Controllers
                 model.Campaigns = AutoMapper.Mapper.Map<List<Campaign>, List<CampaignViewModel>>(campaigns);
                 foreach (var campaign in model.Campaigns)
                 {
-                    var fundraisers = _fundraiserRepository.FindByCampaign(campaign.Id).ToList();
+                    var fundraisers = _mediator.Send<List<Fundraiser>>(new FundraisersByCampaignId(campaign.Id)).Result;
                     campaign.Fundraisers = AutoMapper.Mapper.Map<List<Fundraiser>, List<FundraiserViewModel>>(fundraisers);
                 }
 
                 return View(model);
             }
-            var fundraiser = _fundraiserRepository.FindById(id.Value);
+
+            var request = new FundraiserId()
+            {
+                Id = id.Value
+            };
+
+            var fundraiser = _mediator.Send<Fundraiser>(request).Result;
             if (fundraiser == null)
                 return HttpNotFound();
 
@@ -61,7 +64,12 @@ namespace Fundraise.MvcExample.Controllers
         [HttpGet]
         public ActionResult Donate(Guid id)
         {
-            var fundraiser = _fundraiserRepository.FindById(id);
+            var request = new FundraiserId()
+            {
+                Id = id
+            };
+
+            var fundraiser = _mediator.Send<Fundraiser>(request).Result;
             var fundraiserViewModel = AutoMapper.Mapper.Map<Fundraiser, FundraiserFormViewModel>(fundraiser);
 
             return View(fundraiserViewModel);
