@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Fundraise.Core.Entities;
 using Fundraise.Core.Services;
 using Fundraise.MvcExample.Requests;

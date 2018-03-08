@@ -1,6 +1,9 @@
 ﻿using Fundraise.Core.Entities;
 using Fundraise.Core.Services;
 using Fundraise.MvcExample.Models;
+using Fundraise.MvcExample.Requests;
+using MediatR;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +16,13 @@ namespace Fundraise.MvcExample.Controllers
     {
         private ICampaignRepository _campaignRepository;
         private FundraiserRepository _fundraiserRepository;
+        private readonly IMediator _mediator;
 
-        public AdminController(CampaignRepository campaignRepository, FundraiserRepository fundraiserRepository)
+        public AdminController(IMediator mediator, CampaignRepository campaignRepository, FundraiserRepository fundraiserRepository)
         {
             _campaignRepository = campaignRepository;
             _fundraiserRepository = fundraiserRepository;
+            _mediator = mediator;
         }
 
         // GET: Admin
@@ -102,16 +107,18 @@ namespace Fundraise.MvcExample.Controllers
         [HttpPost]
         public ActionResult FundraiserCreate(FundraiserFormViewModel model)
         {
-            try
+            //var fundraiser = _fundraiserRepository.Create(model.Name, model.CampaignId, FundraiserType.Individual, "test");
+            var request = new CreateFundraiser()
             {
-                var fundraiser = _fundraiserRepository.Create(model.Name, model.CampaignId, FundraiserType.Individual, "test");
+                Name = model.Name,
+                CampaignId = model.CampaignId,
+                IsActive = model.IsActive,
+                Description = model.Description,
+                UserId = User.Identity.GetUserId()
+            };
+            Guid fundraiserId = _mediator.Send<Guid>(request).Result;
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("Index");
         }
 
         public ActionResult FundraiserEdit(Guid id)

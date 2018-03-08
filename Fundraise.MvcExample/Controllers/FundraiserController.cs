@@ -100,8 +100,14 @@ namespace Fundraise.MvcExample.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                var fundraiser = _fundraiserRepository.Create(model.Name, model.CampaignId, FundraiserType.Individual, User.Identity.GetUserId());
-                return RedirectToAction("Index", new { id = fundraiser.Id });
+                var request = new CreateFundraiser()
+                {
+                    Name = model.Name,
+                    CampaignId = model.CampaignId,
+                    UserId = User.Identity.GetUserId()
+                };
+                Guid fundraiserId = _mediator.Send<Guid>(request).Result;
+                return RedirectToAction("Index", new { id = fundraiserId });
             }
             else
             {
