@@ -372,11 +372,15 @@
     <Compile Include="RequestHandlers\FundraisersByCampaignIdHandler.cs" />
     <Compile Include="RequestHandlers\GenericRequestPostProcessor.cs" />
     <Compile Include="RequestHandlers\GenericRequestPreProcessor.cs" />
+    <Compile Include="RequestHandlers\GetAllCampaignsHandler.cs" />
+    <Compile Include="RequestHandlers\GetDonationsByFundraiserIdHandler.cs" />
     <Compile Include="RequestHandlers\GetFundraiserHandler.cs" />
     <Compile Include="Requests\CreateFundraiser.cs" />
     <Compile Include="Requests\Donate.cs" />
     <Compile Include="Requests\FundraisersByCampaignId.cs" />
     <Compile Include="Requests\FundraiserId.cs" />
+    <Compile Include="Requests\GetAllCampaigns.cs" />
+    <Compile Include="Requests\GetDonationsByFundraiserId.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

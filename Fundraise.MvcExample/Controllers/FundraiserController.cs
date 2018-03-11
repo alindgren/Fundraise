@@ -16,15 +16,11 @@ namespace Fundraise.MvcExample.Controllers
 {
     public class FundraiserController : Controller
     {
-        private ICampaignRepository _campaignRepository;
-        private IDonationRepository _donationRepository;
         private readonly IMediator _mediator;
 
-        public FundraiserController(IMediator mediator, CampaignRepository campaignRepository, IDonationRepository donationRepository)
+        public FundraiserController(IMediator mediator)
         {
             _mediator = mediator;
-            _campaignRepository = campaignRepository;
-            _donationRepository = donationRepository;
         }
 
         // GET: Fundraiser
@@ -32,7 +28,7 @@ namespace Fundraise.MvcExample.Controllers
         {
             if (!id.HasValue)
             {
-                var campaigns = _campaignRepository.GetAll().ToList();
+                var campaigns = _mediator.Send<List<Campaign>>(new GetAllCampaigns()).Result;
 
                 var model = new FundraisersViewModel();
                 model.Campaigns = AutoMapper.Mapper.Map<List<Campaign>, List<CampaignViewModel>>(campaigns);
@@ -55,7 +51,7 @@ namespace Fundraise.MvcExample.Controllers
                 return HttpNotFound();
 
             var fundraiserViewModel = AutoMapper.Mapper.Map<Fundraiser, FundraiserViewModel>(fundraiser);
-            var donations = _donationRepository.GetByFundraiser(fundraiser.Id).ToList();
+            var donations = _mediator.Send<List<Donation>>(new GetDonationsByFundraiserId(request.Id)).Result;
             fundraiserViewModel.Donations = AutoMapper.Mapper.Map<List<Donation>, List<DonationViewModel>>(donations);
 
             return View("Detail", fundraiserViewModel);
@@ -99,7 +95,9 @@ namespace Fundraise.MvcExample.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            ViewBag.CampaignDropDown = new SelectList(_campaignRepository.GetAll(), "Id", "Name");
+            var campaigns = _mediator.Send<List<Campaign>>(new GetAllCampaigns()).Result;
+
+            ViewBag.CampaignDropDown = new SelectList(campaigns, "Id", "Name");
             return View();
         }
 
