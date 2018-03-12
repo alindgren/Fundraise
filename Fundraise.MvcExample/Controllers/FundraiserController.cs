@@ -1,16 +1,11 @@
 ﻿using Fundraise.Core.Entities;
-using Fundraise.Core.Services;
 using Fundraise.MvcExample.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using Stripe;
 using Microsoft.AspNet.Identity;
 using MediatR;
 using Fundraise.MvcExample.Requests;
-using System.Threading.Tasks;
 
 namespace Fundraise.MvcExample.Controllers
 {
@@ -41,12 +36,8 @@ namespace Fundraise.MvcExample.Controllers
                 return View(model);
             }
 
-            var request = new FundraiserId()
-            {
-                Id = id.Value
-            };
-
-            var fundraiser = _mediator.Send<Fundraiser>(request).Result;
+            var request = new FundraiserId(id.Value);
+            var fundraiser = _mediator.Send<Fundraiser>(new FundraiserId(id.Value)).Result;
             if (fundraiser == null)
                 return HttpNotFound();
 
@@ -60,10 +51,7 @@ namespace Fundraise.MvcExample.Controllers
         [HttpGet]
         public ActionResult Donate(Guid id)
         {
-            var request = new FundraiserId()
-            {
-                Id = id
-            };
+            var request = new FundraiserId(id);
 
             var fundraiser = _mediator.Send<Fundraiser>(request).Result;
             var fundraiserViewModel = AutoMapper.Mapper.Map<Fundraiser, FundraiserFormViewModel>(fundraiser);

@@ -37,8 +37,7 @@ namespace Fundraise.MvcExample.RequestHandlers
                         Description = fundraiser.Name,
                         SourceTokenOrExistingSourceId = request.StripeToken
                     });
-                    string userid = null;
-                    var donation = _donationRepository.Create(campaign, fundraiser, DonationStatus.Completed, request.DonationAmount, "usd", request.DonationAmount, userid, request.DonorDisplayName, charge.Id);
+                    var donation = _donationRepository.Create(campaign, fundraiser, DonationStatus.Completed, request.DonationAmount, "usd", request.DonationAmount, request.UserId, request.DonorDisplayName, charge.Id);
                 }
                 catch (InvalidOperationException)
                 {

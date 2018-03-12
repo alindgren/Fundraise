@@ -7,20 +7,22 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Fundraise.MvcExample.Models;
 using Fundraise.Core.Entities;
+using MediatR;
+using Fundraise.MvcExample.Requests;
 
 namespace Fundraise.MvcExample.Controllers
 {
     public class ProfileController : Controller
     {
         private ICampaignRepository _campaignRepository;
-        private IFundraiserRepository _fundraiserRepository;
         private IDonationRepository _donationRepository;
+        private readonly IMediator _mediator;
 
-        public ProfileController(CampaignRepository campaignRepository, FundraiserRepository fundraiserRepository, IDonationRepository donationRepository)
+        public ProfileController(CampaignRepository campaignRepository, IDonationRepository donationRepository, IMediator mediator)
         {
             _campaignRepository = campaignRepository;
-            _fundraiserRepository = fundraiserRepository;
             _donationRepository = donationRepository;
+            _mediator = mediator;
         }
 
         // GET: Profile
@@ -38,7 +40,8 @@ namespace Fundraise.MvcExample.Controllers
             // a better way? this is not efficient
             foreach (var donation in model.Donations)
             {
-                var fundraiser = _fundraiserRepository.FindById(donation.FundraiserId);
+                var fundraiser = _mediator.Send<Fundraiser>(new FundraiserId(donation.FundraiserId)).Result;
+
                 if (fundraiser != null)
                 {
                     donation.FundraiserName = fundraiser.Name;
@@ -50,7 +53,7 @@ namespace Fundraise.MvcExample.Controllers
                 }
             }
 
-            var fundraisers = _fundraiserRepository.FindByCreator(userId).ToList();
+            var fundraisers = _mediator.Send<List<Fundraiser>>(new FundraisersByCreatorId(userId)).Result;
             model.Fundraisers = AutoMapper.Mapper.Map<List<Fundraiser>, List<FundraiserViewModel>>(fundraisers);
 
             return View(model);

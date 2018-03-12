@@ -370,6 +370,7 @@
     <Compile Include="RequestHandlers\CreateFundraiserHandler.cs" />
     <Compile Include="RequestHandlers\DonateHandler.cs" />
     <Compile Include="RequestHandlers\FundraisersByCampaignIdHandler.cs" />
+    <Compile Include="RequestHandlers\FundraisersByCreatorIdHandler.cs" />
     <Compile Include="RequestHandlers\GenericRequestPostProcessor.cs" />
     <Compile Include="RequestHandlers\GenericRequestPreProcessor.cs" />
     <Compile Include="RequestHandlers\GetAllCampaignsHandler.cs" />
@@ -379,6 +380,7 @@
     <Compile Include="Requests\Donate.cs" />
     <Compile Include="Requests\FundraisersByCampaignId.cs" />
     <Compile Include="Requests\FundraiserId.cs" />
+    <Compile Include="Requests\FundraisersByCreatorId.cs" />
     <Compile Include="Requests\GetAllCampaigns.cs" />
     <Compile Include="Requests\GetDonationsByFundraiserId.cs" />
     <Compile Include="Startup.cs" />
