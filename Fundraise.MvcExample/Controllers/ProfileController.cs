@@ -14,12 +14,10 @@ namespace Fundraise.MvcExample.Controllers
 {
     public class ProfileController : Controller
     {
-        private IDonationRepository _donationRepository;
         private readonly IMediator _mediator;
 
-        public ProfileController(IDonationRepository donationRepository, IMediator mediator)
+        public ProfileController(IMediator mediator)
         {
-            _donationRepository = donationRepository;
             _mediator = mediator;
         }
 
@@ -32,7 +30,7 @@ namespace Fundraise.MvcExample.Controllers
             }
             string userId = User.Identity.GetUserId();
             var model = new ProfileViewModel();
-            var donations =_donationRepository.GetByDonor(userId).ToList();
+            var donations = _mediator.Send(new DonationsByDonorId(userId)).Result;
             model.Donations = AutoMapper.Mapper.Map<List<Donation>, List<DonationViewModel>>(donations);
 
             // a better way? this is not efficient
