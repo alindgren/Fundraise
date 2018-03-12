@@ -28,7 +28,8 @@ namespace Fundraise.MvcExample.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            var campaigns = _campaignRepository.GetAll().ToList();
+            var campaigns = _mediator.Send(new GetAllCampaigns()).Result;
+
             var adminViewModel = new AdminViewModel();
             adminViewModel.Campaigns = AutoMapper.Mapper.Map<List<Campaign>, List<CampaignViewModel>>(campaigns);
             foreach (var campaign in adminViewModel.Campaigns)
