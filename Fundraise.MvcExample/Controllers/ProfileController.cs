@@ -14,13 +14,11 @@ namespace Fundraise.MvcExample.Controllers
 {
     public class ProfileController : Controller
     {
-        private ICampaignRepository _campaignRepository;
         private IDonationRepository _donationRepository;
         private readonly IMediator _mediator;
 
-        public ProfileController(CampaignRepository campaignRepository, IDonationRepository donationRepository, IMediator mediator)
+        public ProfileController(IDonationRepository donationRepository, IMediator mediator)
         {
-            _campaignRepository = campaignRepository;
             _donationRepository = donationRepository;
             _mediator = mediator;
         }
@@ -40,20 +38,20 @@ namespace Fundraise.MvcExample.Controllers
             // a better way? this is not efficient
             foreach (var donation in model.Donations)
             {
-                var fundraiser = _mediator.Send<Fundraiser>(new FundraiserId(donation.FundraiserId)).Result;
+                var fundraiser = _mediator.Send(new FundraiserId(donation.FundraiserId)).Result;
 
                 if (fundraiser != null)
                 {
                     donation.FundraiserName = fundraiser.Name;
                 }
-                var campaign = _campaignRepository.FindById(donation.CampaignId);
+                var campaign = _mediator.Send<Campaign>(new CampaignById(donation.CampaignId)).Result;
                 if (campaign != null)
                 {
                     donation.CampaignName = campaign.Name;
                 }
             }
 
-            var fundraisers = _mediator.Send<List<Fundraiser>>(new FundraisersByCreatorId(userId)).Result;
+            var fundraisers = _mediator.Send(new FundraisersByCreatorId(userId)).Result;
             model.Fundraisers = AutoMapper.Mapper.Map<List<Fundraiser>, List<FundraiserViewModel>>(fundraisers);
 
             return View(model);
