@@ -380,6 +380,7 @@
     <Compile Include="RequestHandlers\GetDonationsByFundraiserIdHandler.cs" />
     <Compile Include="RequestHandlers\GetFundraiserHandler.cs" />
     <Compile Include="RequestHandlers\UpdateCampaignHandler.cs" />
+    <Compile Include="RequestHandlers\UpdateFundraiserHandler.cs" />
     <Compile Include="Requests\CampaignById.cs" />
     <Compile Include="Requests\CreateCampaign.cs" />
     <Compile Include="Requests\CreateFundraiser.cs" />
@@ -391,6 +392,7 @@
     <Compile Include="Requests\GetAllCampaigns.cs" />
     <Compile Include="Requests\GetDonationsByFundraiserId.cs" />
     <Compile Include="Requests\UpdateCampaign.cs" />
+    <Compile Include="Requests\UpdateFundraiser.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

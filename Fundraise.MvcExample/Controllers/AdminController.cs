@@ -14,12 +14,10 @@ namespace Fundraise.MvcExample.Controllers
 {
     public class AdminController : Controller
     {
-        private FundraiserRepository _fundraiserRepository;
         private readonly IMediator _mediator;
 
-        public AdminController(IMediator mediator, FundraiserRepository fundraiserRepository)
+        public AdminController(IMediator mediator)
         {
-            _fundraiserRepository = fundraiserRepository;
             _mediator = mediator;
         }
 
@@ -32,7 +30,7 @@ namespace Fundraise.MvcExample.Controllers
             adminViewModel.Campaigns = AutoMapper.Mapper.Map<List<Campaign>, List<CampaignViewModel>>(campaigns);
             foreach (var campaign in adminViewModel.Campaigns)
             {
-                var fundraisers = _fundraiserRepository.FindByCampaign(campaign.Id).ToList();
+                var fundraisers = _mediator.Send(new FundraisersByCampaignId(campaign.Id)).Result;
                 campaign.Fundraisers = AutoMapper.Mapper.Map<List<Fundraiser>, List<FundraiserViewModel>>(fundraisers);
             }
             return View(adminViewModel);
@@ -108,7 +106,6 @@ namespace Fundraise.MvcExample.Controllers
         [HttpPost]
         public ActionResult FundraiserCreate(FundraiserFormViewModel model)
         {
-            //var fundraiser = _fundraiserRepository.Create(model.Name, model.CampaignId, FundraiserType.Individual, "test");
             var request = new CreateFundraiser()
             {
                 Name = model.Name,
@@ -117,14 +114,14 @@ namespace Fundraise.MvcExample.Controllers
                 Description = model.Description,
                 UserId = User.Identity.GetUserId()
             };
-            Guid fundraiserId = _mediator.Send<Guid>(request).Result;
+            Guid fundraiserId = _mediator.Send(request).Result;
 
             return RedirectToAction("Index");
         }
 
         public ActionResult FundraiserEdit(Guid id)
         {
-            var fundraiser = _fundraiserRepository.FindById(id);
+            var fundraiser = _mediator.Send(new FundraiserId(id)).Result;
             var fundraiserViewModel = AutoMapper.Mapper.Map<Fundraiser, FundraiserFormViewModel>(fundraiser);
             return View(fundraiserViewModel);
         }
@@ -132,20 +129,18 @@ namespace Fundraise.MvcExample.Controllers
         [HttpPost]
         public ActionResult FundraiserEdit(FundraiserFormViewModel model)
         {
-            try
+            var request = new UpdateFundraiser()
             {
-                var fundraiser = _fundraiserRepository.FindById(model.Id);
-                fundraiser.Name = model.Name;
-                fundraiser.Description = model.Description;
-                fundraiser.IsActive = model.IsActive;
-                _fundraiserRepository.Update(fundraiser);
-
+                Id = model.Id,
+                Name = model.Name,
+                Description = model.Description,
+                IsActive = model.IsActive
+            };
+            bool ok = _mediator.Send(request).Result;
+            if (ok)
                 return RedirectToAction("Index");
-            }
-            catch
-            {
+            else
                 return View();
-            }
         }
 
         // GET: Admin/Delete/5
