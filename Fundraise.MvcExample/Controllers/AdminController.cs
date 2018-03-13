@@ -14,13 +14,11 @@ namespace Fundraise.MvcExample.Controllers
 {
     public class AdminController : Controller
     {
-        private ICampaignRepository _campaignRepository;
         private FundraiserRepository _fundraiserRepository;
         private readonly IMediator _mediator;
 
-        public AdminController(IMediator mediator, CampaignRepository campaignRepository, FundraiserRepository fundraiserRepository)
+        public AdminController(IMediator mediator, FundraiserRepository fundraiserRepository)
         {
-            _campaignRepository = campaignRepository;
             _fundraiserRepository = fundraiserRepository;
             _mediator = mediator;
         }
@@ -43,7 +41,7 @@ namespace Fundraise.MvcExample.Controllers
         // GET: Admin/Details/5
         public ActionResult CampaignDetail(Guid id)
         {
-            var campaign = _campaignRepository.FindById(id);
+            var campaign = _mediator.Send(new CampaignById(id)).Result;
             var campaignViewModel = AutoMapper.Mapper.Map<Campaign, CampaignFormViewModel>(campaign);
             return View(campaignViewModel);
         }
@@ -58,24 +56,25 @@ namespace Fundraise.MvcExample.Controllers
         [HttpPost]
         public ActionResult CampaignCreate(CampaignFormViewModel model)
         {
-            try
+            // todo: validation?
+            var request = new CreateCampaign()
             {
-                var campaign = _campaignRepository.Create(model.Name, model.DefaultCurrencyCode);
-                campaign.Description = model.Description;
-                _campaignRepository.Update(campaign);
+                Name = model.Name,
+                Description = model.Description,
+                DefaultCurrencyCode = model.DefaultCurrencyCode,
+                EndDate = model.EndDate,
+                IsActive = model.IsActive,
+                MoreInfoUrl = model.MoreInfoUrl,
+            };
+            var ok = _mediator.Send(request).Result;
 
-                return RedirectToAction("CampaignDetail", new { id = campaign.Id });
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("Index");
         }
 
         // GET: Admin/Edit/5
         public ActionResult CampaignEdit(Guid id)
         {
-            var campaign = _campaignRepository.FindById(id);
+            var campaign = _mediator.Send(new CampaignById(id)).Result;
             var campaignViewModel = AutoMapper.Mapper.Map<Campaign, CampaignFormViewModel>(campaign);
             return View(campaignViewModel);
         }
@@ -84,20 +83,21 @@ namespace Fundraise.MvcExample.Controllers
         [HttpPost]
         public ActionResult CampaignEdit(CampaignFormViewModel model)
         {
-            try
+            var request = new UpdateCampaign()
             {
-                var campaign = _campaignRepository.FindById(model.Id);
-                campaign.Name = model.Name;
-                campaign.Description = model.Description;
-                campaign.DefaultCurrencyCode = model.DefaultCurrencyCode;
-                _campaignRepository.Update(campaign);
-
-                return RedirectToAction("CampaignDetail", new { id = campaign.Id });
-            }
-            catch
-            {
+                Id = model.Id,
+                DefaultCurrencyCode = model.DefaultCurrencyCode,
+                Description = model.Description,
+                EndDate = model.EndDate,
+                IsActive = model.IsActive,
+                MoreInfoUrl = model.MoreInfoUrl,
+                Name = model.Name
+            };
+            bool ok = _mediator.Send(request).Result;
+            if (ok)
+                return RedirectToAction("CampaignDetail", new { id = model.Id });
+            else
                 return View();
-            }
         }
 
         public ActionResult FundraiserCreate(Guid campaignId)
