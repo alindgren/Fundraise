@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using MediatR;
-using Fundraise.MvcExample.Requests;
+using Fundraise.Requests.Campaign;
+using Fundraise.Requests;
 
 namespace Fundraise.MvcExample.Controllers
 {
@@ -23,26 +24,26 @@ namespace Fundraise.MvcExample.Controllers
         {
             if (!id.HasValue)
             {
-                var campaigns = _mediator.Send<List<Campaign>>(new GetAllCampaigns()).Result;
+                var campaigns = _mediator.Send(new GetAll()).Result;
 
                 var model = new FundraisersViewModel();
                 model.Campaigns = AutoMapper.Mapper.Map<List<Campaign>, List<CampaignViewModel>>(campaigns);
                 foreach (var campaign in model.Campaigns)
                 {
-                    var fundraisers = _mediator.Send<List<Fundraiser>>(new FundraisersByCampaignId(campaign.Id)).Result;
+                    var fundraisers = _mediator.Send(new Requests.Fundraiser.GetByCampaignId(campaign.Id)).Result;
                     campaign.Fundraisers = AutoMapper.Mapper.Map<List<Fundraiser>, List<FundraiserViewModel>>(fundraisers);
                 }
 
                 return View(model);
             }
 
-            var request = new FundraiserId(id.Value);
-            var fundraiser = _mediator.Send<Fundraiser>(new FundraiserId(id.Value)).Result;
+            var request = new Requests.Fundraiser.GetById(id.Value);
+            var fundraiser = _mediator.Send(request).Result;
             if (fundraiser == null)
                 return HttpNotFound();
 
             var fundraiserViewModel = AutoMapper.Mapper.Map<Fundraiser, FundraiserViewModel>(fundraiser);
-            var donations = _mediator.Send<List<Donation>>(new GetDonationsByFundraiserId(request.Id)).Result;
+            var donations = _mediator.Send(new Requests.Donation.GetByFundraiserId(request.Id)).Result;
             fundraiserViewModel.Donations = AutoMapper.Mapper.Map<List<Donation>, List<DonationViewModel>>(donations);
 
             return View("Detail", fundraiserViewModel);
@@ -51,9 +52,8 @@ namespace Fundraise.MvcExample.Controllers
         [HttpGet]
         public ActionResult Donate(Guid id)
         {
-            var request = new FundraiserId(id);
-
-            var fundraiser = _mediator.Send<Fundraiser>(request).Result;
+            var request = new Requests.Fundraiser.GetById(id);
+            var fundraiser = _mediator.Send(request).Result;
             var fundraiserViewModel = AutoMapper.Mapper.Map<Fundraiser, FundraiserFormViewModel>(fundraiser);
 
             return View(fundraiserViewModel);
@@ -70,7 +70,7 @@ namespace Fundraise.MvcExample.Controllers
                 StripeToken = model.StripeToken
             };
             request.UserId = User.Identity.IsAuthenticated ? User.Identity.GetUserId() : string.Empty;
-            bool success = _mediator.Send<bool>(request).Result;
+            bool success = _mediator.Send(request).Result;
 
             var fundraiserViewModel = new FundraiserFormViewModel()
             {
@@ -83,7 +83,7 @@ namespace Fundraise.MvcExample.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            var campaigns = _mediator.Send<List<Campaign>>(new GetAllCampaigns()).Result;
+            var campaigns = _mediator.Send(new GetAll()).Result;
 
             ViewBag.CampaignDropDown = new SelectList(campaigns, "Id", "Name");
             return View();
@@ -94,13 +94,13 @@ namespace Fundraise.MvcExample.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                var request = new CreateFundraiser()
+                var request = new Requests.Fundraiser.Create()
                 {
                     Name = model.Name,
                     CampaignId = model.CampaignId,
                     UserId = User.Identity.GetUserId()
                 };
-                Guid fundraiserId = _mediator.Send<Guid>(request).Result;
+                Guid fundraiserId = _mediator.Send(request).Result;
                 return RedirectToAction("Index", new { id = fundraiserId });
             }
             else

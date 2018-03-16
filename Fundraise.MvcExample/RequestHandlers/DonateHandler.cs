@@ -1,7 +1,7 @@
 ﻿using System;
 using Fundraise.Core.Entities;
 using Fundraise.Core.Services;
-using Fundraise.MvcExample.Requests;
+using Fundraise.Requests;
 using MediatR;
 using Stripe;
 

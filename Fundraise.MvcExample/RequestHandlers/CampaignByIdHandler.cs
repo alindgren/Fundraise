@@ -1,11 +1,11 @@
 ﻿using Fundraise.Core.Entities;
 using Fundraise.Core.Services;
-using Fundraise.MvcExample.Requests;
+using Fundraise.Requests.Campaign;
 using MediatR;
 
 namespace Fundraise.MvcExample.RequestHandlers
 {
-    public class CampaignByIdHandler : RequestHandler<CampaignById, Campaign>
+    public class CampaignByIdHandler : RequestHandler<GetById, Campaign>
     {
         private ICampaignRepository _campaignRepository;
 
@@ -14,7 +14,7 @@ namespace Fundraise.MvcExample.RequestHandlers
             _campaignRepository = campaignRepository;
         }
 
-        protected override Campaign HandleCore(CampaignById request)
+        protected override Campaign HandleCore(GetById request)
         {
             return _campaignRepository.FindById(request.CampaignId);
         }

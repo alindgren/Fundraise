@@ -1,13 +1,11 @@
 ﻿using Fundraise.Core.Entities;
-using Fundraise.Core.Services;
 using Fundraise.MvcExample.Models;
-using Fundraise.MvcExample.Requests;
+using Fundraise.Requests.Campaign;
+using Fundraise.Requests.Fundraiser;
 using MediatR;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Fundraise.MvcExample.Controllers
@@ -24,13 +22,13 @@ namespace Fundraise.MvcExample.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            var campaigns = _mediator.Send(new GetAllCampaigns()).Result;
+            var campaigns = _mediator.Send(new GetAll()).Result;
 
             var adminViewModel = new AdminViewModel();
             adminViewModel.Campaigns = AutoMapper.Mapper.Map<List<Campaign>, List<CampaignViewModel>>(campaigns);
             foreach (var campaign in adminViewModel.Campaigns)
             {
-                var fundraisers = _mediator.Send(new FundraisersByCampaignId(campaign.Id)).Result;
+                var fundraisers = _mediator.Send(new GetByCampaignId(campaign.Id)).Result;
                 campaign.Fundraisers = AutoMapper.Mapper.Map<List<Fundraiser>, List<FundraiserViewModel>>(fundraisers);
             }
             return View(adminViewModel);
@@ -39,7 +37,7 @@ namespace Fundraise.MvcExample.Controllers
         // GET: Admin/Details/5
         public ActionResult CampaignDetail(Guid id)
         {
-            var campaign = _mediator.Send(new CampaignById(id)).Result;
+            var campaign = _mediator.Send(new Requests.Campaign.GetById(id)).Result;
             var campaignViewModel = AutoMapper.Mapper.Map<Campaign, CampaignFormViewModel>(campaign);
             return View(campaignViewModel);
         }
@@ -55,7 +53,7 @@ namespace Fundraise.MvcExample.Controllers
         public ActionResult CampaignCreate(CampaignFormViewModel model)
         {
             // todo: validation?
-            var request = new CreateCampaign()
+            var request = new Requests.Campaign.Create()
             {
                 Name = model.Name,
                 Description = model.Description,
@@ -72,7 +70,7 @@ namespace Fundraise.MvcExample.Controllers
         // GET: Admin/Edit/5
         public ActionResult CampaignEdit(Guid id)
         {
-            var campaign = _mediator.Send(new CampaignById(id)).Result;
+            var campaign = _mediator.Send(new Requests.Campaign.GetById(id)).Result;
             var campaignViewModel = AutoMapper.Mapper.Map<Campaign, CampaignFormViewModel>(campaign);
             return View(campaignViewModel);
         }
@@ -81,7 +79,7 @@ namespace Fundraise.MvcExample.Controllers
         [HttpPost]
         public ActionResult CampaignEdit(CampaignFormViewModel model)
         {
-            var request = new UpdateCampaign()
+            var request = new Requests.Campaign.Update()
             {
                 Id = model.Id,
                 DefaultCurrencyCode = model.DefaultCurrencyCode,
@@ -106,7 +104,7 @@ namespace Fundraise.MvcExample.Controllers
         [HttpPost]
         public ActionResult FundraiserCreate(FundraiserFormViewModel model)
         {
-            var request = new CreateFundraiser()
+            var request = new Requests.Fundraiser.Create()
             {
                 Name = model.Name,
                 CampaignId = model.CampaignId,
@@ -121,7 +119,7 @@ namespace Fundraise.MvcExample.Controllers
 
         public ActionResult FundraiserEdit(Guid id)
         {
-            var fundraiser = _mediator.Send(new FundraiserId(id)).Result;
+            var fundraiser = _mediator.Send(new Requests.Fundraiser.GetById(id)).Result;
             var fundraiserViewModel = AutoMapper.Mapper.Map<Fundraiser, FundraiserFormViewModel>(fundraiser);
             return View(fundraiserViewModel);
         }
@@ -129,7 +127,7 @@ namespace Fundraise.MvcExample.Controllers
         [HttpPost]
         public ActionResult FundraiserEdit(FundraiserFormViewModel model)
         {
-            var request = new UpdateFundraiser()
+            var request = new Requests.Fundraiser.Update()
             {
                 Id = model.Id,
                 Name = model.Name,

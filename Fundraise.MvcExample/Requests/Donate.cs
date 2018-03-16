@@ -1,7 +1,7 @@
 ﻿using System;
 using MediatR;
 
-namespace Fundraise.MvcExample.Requests
+namespace Fundraise.Requests
 {
     public class Donate : IRequest<bool>
     {

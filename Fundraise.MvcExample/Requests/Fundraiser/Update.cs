@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using System;
 
-namespace Fundraise.MvcExample.Requests
+namespace Fundraise.Requests.Fundraiser
 {
-    public class UpdateFundraiser : IRequest<bool>
+    public class Update : IRequest<bool>
     {
         public Guid Id { get; set; }
         //public Guid CampaignId { get; set; }

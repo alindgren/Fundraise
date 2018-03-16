@@ -1,10 +1,10 @@
 ﻿using Fundraise.Core.Services;
-using Fundraise.MvcExample.Requests;
+using Fundraise.Requests.Campaign;
 using MediatR;
 
 namespace Fundraise.MvcExample.RequestHandlers
 {
-    public class UpdateCampaignHandler : RequestHandler<UpdateCampaign, bool>
+    public class UpdateCampaignHandler : RequestHandler<Update, bool>
     {
         private ICampaignRepository _campaignRepository;
 
@@ -13,7 +13,7 @@ namespace Fundraise.MvcExample.RequestHandlers
             _campaignRepository = campaignRepository;
         }
 
-        protected override bool HandleCore(UpdateCampaign request)
+        protected override bool HandleCore(Update request)
         {
             try
             {

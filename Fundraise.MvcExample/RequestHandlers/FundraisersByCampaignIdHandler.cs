@@ -1,13 +1,13 @@
 ﻿using Fundraise.Core.Entities;
 using Fundraise.Core.Services;
-using Fundraise.MvcExample.Requests;
+using Fundraise.Requests.Fundraiser;
 using MediatR;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Fundraise.MvcExample.RequestHandlers
 {
-    public class FundraisersByCampaignIdHandler : RequestHandler<FundraisersByCampaignId, List<Fundraiser>>
+    public class FundraisersByCampaignIdHandler : RequestHandler<GetByCampaignId, List<Fundraiser>>
     {
         private IFundraiserRepository _fundraiserRepository;
 
@@ -16,7 +16,7 @@ namespace Fundraise.MvcExample.RequestHandlers
             _fundraiserRepository = fundraiserRepository;
         }
 
-        protected override List<Fundraiser> HandleCore(FundraisersByCampaignId request)
+        protected override List<Fundraiser> HandleCore(GetByCampaignId request)
         {
             return _fundraiserRepository.FindByCampaign(request.CampaignId).ToList();
         }

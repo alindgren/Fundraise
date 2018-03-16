@@ -1,6 +1,6 @@
 ﻿using Fundraise.Core.Entities;
 using Fundraise.Core.Services;
-using Fundraise.MvcExample.Requests;
+using Fundraise.Requests.Donation;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Web;
 
 namespace Fundraise.MvcExample.RequestHandlers
 {
-    public class GetDonationsByFundraiserIdHandler : RequestHandler<GetDonationsByFundraiserId, List<Donation>>
+    public class GetDonationsByFundraiserIdHandler : RequestHandler<GetByFundraiserId, List<Donation>>
     {
         private IDonationRepository _donationRepository;
 
@@ -18,7 +18,7 @@ namespace Fundraise.MvcExample.RequestHandlers
             _donationRepository = donationRepository;
         }
 
-        protected override List<Donation> HandleCore(GetDonationsByFundraiserId request)
+        protected override List<Donation> HandleCore(GetByFundraiserId request)
         {
             return _donationRepository.GetByFundraiser(request.FundraiserId).ToList();
         }

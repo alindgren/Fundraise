@@ -17,7 +17,7 @@ using System.Web.Routing;
 using System.Configuration;
 using MediatR;
 using System.Collections.Generic;
-using Fundraise.MvcExample.Requests;
+using Fundraise.Requests;
 using System.Linq;
 using MediatR.Pipeline;
 using Fundraise.MvcExample.RequestHandlers;

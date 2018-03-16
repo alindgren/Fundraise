@@ -381,18 +381,18 @@
     <Compile Include="RequestHandlers\GetFundraiserHandler.cs" />
     <Compile Include="RequestHandlers\UpdateCampaignHandler.cs" />
     <Compile Include="RequestHandlers\UpdateFundraiserHandler.cs" />
-    <Compile Include="Requests\CampaignById.cs" />
-    <Compile Include="Requests\CreateCampaign.cs" />
-    <Compile Include="Requests\CreateFundraiser.cs" />
+    <Compile Include="Requests\Campaign\GetById.cs" />
+    <Compile Include="Requests\Campaign\Create.cs" />
+    <Compile Include="Requests\Fundraiser\Create.cs" />
     <Compile Include="Requests\Donate.cs" />
-    <Compile Include="Requests\DonationsByDonorId.cs" />
-    <Compile Include="Requests\FundraisersByCampaignId.cs" />
-    <Compile Include="Requests\FundraiserId.cs" />
-    <Compile Include="Requests\FundraisersByCreatorId.cs" />
-    <Compile Include="Requests\GetAllCampaigns.cs" />
-    <Compile Include="Requests\GetDonationsByFundraiserId.cs" />
-    <Compile Include="Requests\UpdateCampaign.cs" />
-    <Compile Include="Requests\UpdateFundraiser.cs" />
+    <Compile Include="Requests\Donation\GetByDonorId.cs" />
+    <Compile Include="Requests\Fundraiser\GetByCampaignId.cs" />
+    <Compile Include="Requests\Fundraiser\GetById.cs" />
+    <Compile Include="Requests\Fundraiser\GetByCreatorId.cs" />
+    <Compile Include="Requests\Campaign\GetAll.cs" />
+    <Compile Include="Requests\Donation\GetDonationsByFundraiserId.cs" />
+    <Compile Include="Requests\Campaign\Update.cs" />
+    <Compile Include="Requests\Fundraiser\Update.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

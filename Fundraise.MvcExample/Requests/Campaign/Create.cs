@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using System;
 
-namespace Fundraise.MvcExample.Requests
+namespace Fundraise.Requests.Campaign
 {
-    public class CreateCampaign : IRequest<bool>
+    public class Create : IRequest<bool>
     {
         public string Name { get; set; }
 
