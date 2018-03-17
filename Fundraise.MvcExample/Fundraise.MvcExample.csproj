@@ -366,21 +366,6 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ProfileViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RequestHandlers\CampaignByIdHandler.cs" />
-    <Compile Include="RequestHandlers\ConstrainedRequestPostProcessor.cs" />
-    <Compile Include="RequestHandlers\CreateCampaignHandler.cs" />
-    <Compile Include="RequestHandlers\CreateFundraiserHandler.cs" />
-    <Compile Include="RequestHandlers\DonateHandler.cs" />
-    <Compile Include="RequestHandlers\DonationsByDonorIdHandler.cs" />
-    <Compile Include="RequestHandlers\FundraisersByCampaignIdHandler.cs" />
-    <Compile Include="RequestHandlers\FundraisersByCreatorIdHandler.cs" />
-    <Compile Include="RequestHandlers\GenericRequestPostProcessor.cs" />
-    <Compile Include="RequestHandlers\GenericRequestPreProcessor.cs" />
-    <Compile Include="RequestHandlers\GetAllCampaignsHandler.cs" />
-    <Compile Include="RequestHandlers\GetDonationsByFundraiserIdHandler.cs" />
-    <Compile Include="RequestHandlers\GetFundraiserHandler.cs" />
-    <Compile Include="RequestHandlers\UpdateCampaignHandler.cs" />
-    <Compile Include="RequestHandlers\UpdateFundraiserHandler.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -509,6 +494,10 @@
     <ProjectReference Include="..\Fundraise.Core\Fundraise.Core.csproj">
       <Project>{f3b97c51-8dba-420d-a9f0-e37572a31d5f}</Project>
       <Name>Fundraise.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fundraise.RequestHandlers.InProcess\Fundraise.RequestHandlers.InProcess.csproj">
+      <Project>{63f975e9-546d-43ed-b7fe-e62245ff44b1}</Project>
+      <Name>Fundraise.RequestHandlers.InProcess</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fundraise.Requests\Fundraise.Requests.csproj">
       <Project>{e3d20e07-694e-4110-915f-de210e66f8e4}</Project>
