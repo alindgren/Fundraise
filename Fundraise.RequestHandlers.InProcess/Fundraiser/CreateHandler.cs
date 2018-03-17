@@ -4,13 +4,13 @@ using Fundraise.Core.Services;
 using Fundraise.Requests.Fundraiser;
 using MediatR;
 
-namespace Fundraise.MvcExample.RequestHandlers
+namespace Fundraise.RequestHandlers.InProcess.Fundraiser
 {
-    public class CreateFundraiserHandler : RequestHandler<Create, Guid>
+    public class CreateHandler : RequestHandler<Create, Guid>
     {
         private IFundraiserRepository _fundraiserRepository;
 
-        public CreateFundraiserHandler(IFundraiserRepository fundraiserRepository)
+        public CreateHandler(IFundraiserRepository fundraiserRepository)
         {
             _fundraiserRepository = fundraiserRepository;
         }

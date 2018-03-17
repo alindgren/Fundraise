@@ -2,13 +2,13 @@
 using Fundraise.Requests.Campaign;
 using MediatR;
 
-namespace Fundraise.MvcExample.RequestHandlers
+namespace Fundraise.RequestHandlers.InProcess.Campaign
 {
-    public class UpdateCampaignHandler : RequestHandler<Update, bool>
+    public class UpdateHandler : RequestHandler<Update, bool>
     {
         private ICampaignRepository _campaignRepository;
 
-        public UpdateCampaignHandler(CampaignRepository campaignRepository)
+        public UpdateHandler(CampaignRepository campaignRepository)
         {
             _campaignRepository = campaignRepository;
         }

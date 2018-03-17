@@ -1,15 +1,14 @@
 ﻿using Fundraise.Core.Services;
 using Fundraise.Requests.Fundraiser;
 using MediatR;
-using System;
 
-namespace Fundraise.MvcExample.RequestHandlers
+namespace Fundraise.RequestHandlers.InProcess.Fundraiser
 {
-    public class UpdateFundraiserHandler : RequestHandler<Update, bool>
+    public class UpdateHandler : RequestHandler<Update, bool>
     {
         private IFundraiserRepository _fundraiserRepository;
 
-        public UpdateFundraiserHandler(IFundraiserRepository fundraiserRepository)
+        public UpdateHandler(IFundraiserRepository fundraiserRepository)
         {
             _fundraiserRepository = fundraiserRepository;
         }
