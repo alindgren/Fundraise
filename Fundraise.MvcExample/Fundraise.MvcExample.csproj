@@ -381,18 +381,6 @@
     <Compile Include="RequestHandlers\GetFundraiserHandler.cs" />
     <Compile Include="RequestHandlers\UpdateCampaignHandler.cs" />
     <Compile Include="RequestHandlers\UpdateFundraiserHandler.cs" />
-    <Compile Include="Requests\Campaign\GetById.cs" />
-    <Compile Include="Requests\Campaign\Create.cs" />
-    <Compile Include="Requests\Fundraiser\Create.cs" />
-    <Compile Include="Requests\Donate.cs" />
-    <Compile Include="Requests\Donation\GetByDonorId.cs" />
-    <Compile Include="Requests\Fundraiser\GetByCampaignId.cs" />
-    <Compile Include="Requests\Fundraiser\GetById.cs" />
-    <Compile Include="Requests\Fundraiser\GetByCreatorId.cs" />
-    <Compile Include="Requests\Campaign\GetAll.cs" />
-    <Compile Include="Requests\Donation\GetDonationsByFundraiserId.cs" />
-    <Compile Include="Requests\Campaign\Update.cs" />
-    <Compile Include="Requests\Fundraiser\Update.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -521,6 +509,10 @@
     <ProjectReference Include="..\Fundraise.Core\Fundraise.Core.csproj">
       <Project>{f3b97c51-8dba-420d-a9f0-e37572a31d5f}</Project>
       <Name>Fundraise.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fundraise.Requests\Fundraise.Requests.csproj">
+      <Project>{e3d20e07-694e-4110-915f-de210e66f8e4}</Project>
+      <Name>Fundraise.Requests</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

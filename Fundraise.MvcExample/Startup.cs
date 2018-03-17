@@ -102,6 +102,7 @@ namespace Fundraise.MvcExample
         {
             yield return typeof(IMediator).GetTypeInfo().Assembly;
             yield return typeof(Donate).GetTypeInfo().Assembly;
+            yield return typeof(DonateHandler).GetTypeInfo().Assembly;
             yield return typeof(DonationRepository).GetTypeInfo().Assembly;
         }
     }
