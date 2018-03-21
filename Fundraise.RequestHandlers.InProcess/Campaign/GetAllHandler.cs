@@ -10,7 +10,7 @@ namespace Fundraise.RequestHandlers.InProcess.Campaign
     {
         private ICampaignRepository _campaignRepository;
 
-        public GetAllHandler(CampaignRepository campaignRepository)
+        public GetAllHandler(ICampaignRepository campaignRepository)
         {
             _campaignRepository = campaignRepository;
         }

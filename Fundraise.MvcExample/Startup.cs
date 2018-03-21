@@ -22,6 +22,7 @@ using System.Linq;
 using MediatR.Pipeline;
 using Fundraise.MvcExample.RequestHandlers;
 using System.IO;
+using Fundraise.RequestHandlers;
 
 [assembly: OwinStartupAttribute(typeof(Fundraise.MvcExample.Startup))]
 namespace Fundraise.MvcExample

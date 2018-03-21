@@ -5,7 +5,7 @@ using Fundraise.Requests;
 using MediatR;
 using Stripe;
 
-namespace Fundraise.MvcExample.RequestHandlers
+namespace Fundraise.RequestHandlers
 {
     public class DonateHandler : RequestHandler<Donate, bool>
     {
