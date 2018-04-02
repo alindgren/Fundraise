@@ -43,6 +43,7 @@ namespace Fundraise.MvcExample
                 return new FundraiseContext(optionsBuilder.Options);
             }, Lifestyle.Scoped);
 
+            container.Register<Fundraise.IntegrationEvents.IEventBus, Fundraise.IntegrationEvents.RabbitMQ.EventBusRabbitMQ>(Lifestyle.Singleton);
             container.Register<IFundraiserRepository, FundraiserRepository>(Lifestyle.Scoped);
             container.Register<ICampaignRepository, CampaignRepository>(Lifestyle.Scoped);
             container.Register<IDonationRepository, DonationRepository>(Lifestyle.Scoped);
