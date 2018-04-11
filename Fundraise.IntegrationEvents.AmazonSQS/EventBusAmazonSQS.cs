@@ -31,10 +31,6 @@ namespace Fundraise.IntegrationEvents.AmazonSQS
                 ServiceURL = "http://sqs.us-west-2.amazonaws.com"
             };
             sqsClient = new AmazonSQSClient(sqsConfig);
-
-            // User Fundraise
-            // Access key ID  AKIAJK5TSBF7AEC3XHSA
-            // Secret access key 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
         }
 
         public void Publish<T>(T e) where T : IntegrationEvent
