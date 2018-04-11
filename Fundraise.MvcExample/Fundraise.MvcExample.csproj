@@ -54,6 +54,12 @@
     <Reference Include="AutoMapper, Version=6.2.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.6.2.2\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="AWSSDK.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
+      <HintPath>..\packages\AWSSDK.Core.3.3.21.19\lib\net45\AWSSDK.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.SQS, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
+      <HintPath>..\packages\AWSSDK.SQS.3.3.3.5\lib\net45\AWSSDK.SQS.dll</HintPath>
+    </Reference>
     <Reference Include="EasyNetQ, Version=2.3.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\EasyNetQ.2.3.1\lib\net451\EasyNetQ.dll</HintPath>
     </Reference>
@@ -504,6 +510,10 @@
       <Project>{f3b97c51-8dba-420d-a9f0-e37572a31d5f}</Project>
       <Name>Fundraise.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fundraise.IntegrationEvents.AmazonSQS\Fundraise.IntegrationEvents.AmazonSQS.csproj">
+      <Project>{ddff4b2e-9002-4bd8-aa53-d3f0bfa60c3b}</Project>
+      <Name>Fundraise.IntegrationEvents.AmazonSQS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fundraise.IntegrationEvents.RabbitMQ\Fundraise.IntegrationEvents.RabbitMQ.csproj">
       <Project>{c7d4bd6c-00b8-469a-ac3c-b41199f2c430}</Project>
       <Name>Fundraise.IntegrationEvents.RabbitMQ</Name>
@@ -532,6 +542,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\AWSSDK.SQS.3.3.3.5\analyzers\dotnet\cs\AWSSDK.SQS.CodeAnalysis.dll" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

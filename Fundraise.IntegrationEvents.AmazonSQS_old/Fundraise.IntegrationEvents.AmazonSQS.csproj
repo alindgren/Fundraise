@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.Core" Version="3.3.21.20" />
+    <PackageReference Include="AWSSDK.SQS" Version="3.3.3.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fundraise.IntegrationEvents\Fundraise.IntegrationEvents.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Fundraise.IntegrationEvents">
+      <HintPath>..\Fundraise.IntegrationEvents\bin\Debug\netstandard2.0\Fundraise.IntegrationEvents.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

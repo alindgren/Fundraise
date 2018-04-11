@@ -8,6 +8,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fundraise.Core.Tests", "Fundraise.Core.Tests\Fundraise.Core.Tests.csproj", "{A149842E-392D-4BBC-937B-7B41BC130CDC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fundraise.MvcExample", "Fundraise.MvcExample\Fundraise.MvcExample.csproj", "{EBEBE227-C1BE-48EE-9F7A-9031DCE27F97}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DDFF4B2E-9002-4BD8-AA53-D3F0BFA60C3B} = {DDFF4B2E-9002-4BD8-AA53-D3F0BFA60C3B}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fundraise.MvcExample.Tests", "Fundraise.MvcExample.Tests\Fundraise.MvcExample.Tests.csproj", "{A34B0D2C-BDF5-420D-B5E3-A17DBB353344}"
 EndProject
@@ -15,9 +18,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fundraise.Requests", "Fundr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fundraise.RequestHandlers.InProcess", "Fundraise.RequestHandlers.InProcess\Fundraise.RequestHandlers.InProcess.csproj", "{63F975E9-546D-43ED-B7FE-E62245FF44B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fundraise.IntegrationEvents", "Fundraise.IntegrationEvents\Fundraise.IntegrationEvents.csproj", "{0E9C4950-78D9-4F1D-8876-72A617F55F00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fundraise.IntegrationEvents", "Fundraise.IntegrationEvents\Fundraise.IntegrationEvents.csproj", "{0E9C4950-78D9-4F1D-8876-72A617F55F00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fundraise.IntegrationEvents.RabbitMQ", "Fundraise.IntegrationEvents.RabbitMQ\Fundraise.IntegrationEvents.RabbitMQ.csproj", "{C7D4BD6C-00B8-469A-AC3C-B41199F2C430}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fundraise.IntegrationEvents.RabbitMQ", "Fundraise.IntegrationEvents.RabbitMQ\Fundraise.IntegrationEvents.RabbitMQ.csproj", "{C7D4BD6C-00B8-469A-AC3C-B41199F2C430}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fundraise.IntegrationEvents.AmazonSQS", "Fundraise.IntegrationEvents.AmazonSQS\Fundraise.IntegrationEvents.AmazonSQS.csproj", "{DDFF4B2E-9002-4BD8-AA53-D3F0BFA60C3B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +62,10 @@ Global
 		{C7D4BD6C-00B8-469A-AC3C-B41199F2C430}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7D4BD6C-00B8-469A-AC3C-B41199F2C430}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7D4BD6C-00B8-469A-AC3C-B41199F2C430}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDFF4B2E-9002-4BD8-AA53-D3F0BFA60C3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDFF4B2E-9002-4BD8-AA53-D3F0BFA60C3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDFF4B2E-9002-4BD8-AA53-D3F0BFA60C3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDFF4B2E-9002-4BD8-AA53-D3F0BFA60C3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
