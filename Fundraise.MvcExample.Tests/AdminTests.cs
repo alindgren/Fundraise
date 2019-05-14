@@ -12,7 +12,7 @@ namespace Fundraise.MvcExample.Tests
     {
         public static IisExpressWebServer WebServer;
         public static FirefoxDriver Browser;
-        public const string email = "test28@alexlindgren.com";
+        public const string email = "test29@alexlindgren.com";
 
         [ClassInitialize]
         [TestProperty("TestKind", "Browser")]
